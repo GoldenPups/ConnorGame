@@ -8,10 +8,13 @@
 
 #include <SDL2/SDL.h>
 #include <iostream>
+#include "physics.h"
 
 // Function declarations
 bool initRenderer();
 void closeRenderer();
 void drawGrid();
+void drawPlayer(Player* player);
+void updateRenderer(Player* player);
 
 #endif

@@ -1,6 +1,7 @@
 #include "renderer.h"
 
 SDL_Window* window = nullptr;
+SDL_Renderer* renderer = nullptr;
 
 bool initRenderer() {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -18,15 +19,19 @@ bool initRenderer() {
         return false;
     }
 
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (!renderer) {
+        std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return false;
+    }
+
     return true;
 }
 
-void drawGrid(){
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (!renderer) {
-        std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
-        return;
-    }
+void drawGrid() {
+    if (!renderer) return;
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Set background color to black
     SDL_RenderClear(renderer);
@@ -48,13 +53,45 @@ void drawGrid(){
     }
 
     SDL_RenderPresent(renderer);
+}
 
-    SDL_DestroyRenderer(renderer);
+void drawPlayer(SDL_Renderer *renderer, Player* player) {
+    SDL_Rect playerRect;
+    playerRect.x = static_cast<int>(player->x);
+    playerRect.y = static_cast<int>(player->y);
+    playerRect.w = 50; // Width of the player
+    playerRect.h = 50; // Height of the player
+    SDL_RenderDrawRect(renderer, &playerRect);
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Set player color to red
+    SDL_RenderFillRect(renderer, &playerRect);
+    SDL_RenderPresent(renderer);
+}
+
+void updateRenderer(Player* player) {
+    if (!renderer) return;
+
+    // Clear the screen
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Set background color to black
+    SDL_RenderClear(renderer);
+
+    // Draw the grid
+    drawGrid();
+
+    // Draw the player
+    drawPlayer(renderer, player);
+
+    // Present the renderer
+    SDL_RenderPresent(renderer);
 }
 
 void closeRenderer() {
+    if (renderer) {
+        SDL_DestroyRenderer(renderer);
+        renderer = nullptr;
+    }
     if (window) {
         SDL_DestroyWindow(window);
+        window = nullptr;
     }
     SDL_Quit();
 }
