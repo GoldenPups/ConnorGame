@@ -1,12 +1,11 @@
-// .vscode/launch.json
 {
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "WSL: Debug hello",
+        "name": "WSL: Debug Game",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/renderer",
+        "program": "${workspaceFolder}/game",
         "args": [],
         "stopAtEntry": false,
         "cwd": "${workspaceFolder}",
@@ -21,8 +20,7 @@
             "ignoreFailures": true
           }
         ],
-        "preLaunchTask": "build renderer"
+        "preLaunchTask": "build"
       }
     ]
-  }
-  
+}
