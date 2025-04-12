@@ -8,9 +8,9 @@ bool initRenderer() {
         return false;
     }
 
-    window = SDL_CreateWindow("Connor Game",
+    window = SDL_CreateWindow(window_Title,
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        window_Height, window_Width, SDL_WINDOW_SHOWN);
+        window_Width, window_Height, SDL_WINDOW_SHOWN);
 
     if (!window) {
         std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
