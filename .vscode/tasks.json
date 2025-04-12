@@ -1,0 +1,22 @@
+// .vscode/tasks.json
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build hello",
+      "type": "shell",
+      "command": "g++",
+      "args": [
+        "-g",
+        "src/hello.cpp",
+        "-o",
+        "hello"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"]
+    }
+  ]
+}
