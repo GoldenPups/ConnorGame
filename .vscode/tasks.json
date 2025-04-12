@@ -1,22 +1,30 @@
-// .vscode/tasks.json
 {
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "build hello",
+      "label": "build renderer",
       "type": "shell",
       "command": "g++",
       "args": [
         "-g",
-        "src/hello.cpp",
+        "src/renderer.cpp",
         "-o",
-        "hello"
+        "renderer",
+        "`sdl2-config",
+        "--cflags",
+        "--libs`"
       ],
+      "options": {
+        "shell": {
+          "executable": "/bin/bash",
+          "args": ["-c"]
+        }
+      },
+      "problemMatcher": ["$gcc"],
       "group": {
         "kind": "build",
         "isDefault": true
-      },
-      "problemMatcher": ["$gcc"]
+      }
     }
   ]
 }

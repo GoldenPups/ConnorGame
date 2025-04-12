@@ -6,7 +6,7 @@
         "name": "WSL: Debug hello",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/hello",
+        "program": "${workspaceFolder}/renderer",
         "args": [],
         "stopAtEntry": false,
         "cwd": "${workspaceFolder}",
@@ -21,7 +21,7 @@
             "ignoreFailures": true
           }
         ],
-        "preLaunchTask": "build hello"
+        "preLaunchTask": "build renderer"
       }
     ]
   }
