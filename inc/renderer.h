@@ -10,5 +10,6 @@
 // Function declarations
 bool initRenderer();
 void closeRenderer();
+void drawGrid();
 
 #endif

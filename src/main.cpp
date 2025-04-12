@@ -13,6 +13,8 @@ int main() {
         return 1;
     }
     
+    drawGrid();  // Draw the grid
+
     // Keep the window open for 8 seconds
     SDL_Delay(8000);
     
