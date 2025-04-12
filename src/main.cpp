@@ -1,6 +1,10 @@
 #include <iostream>
 #include "renderer.h"  // Include the renderer header
 
+void cleanUp(){
+    closeRenderer();
+}
+
 int main() {
     std::cout << "Hello, World!" << std::endl;
     
@@ -12,8 +16,7 @@ int main() {
     // Keep the window open for 8 seconds
     SDL_Delay(8000);
     
-    // Clean up
-    closeRenderer();
+    cleanUp();
     
     return 0;
 }

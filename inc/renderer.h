@@ -5,6 +5,7 @@
 #define window_Height 640
 
 #include <SDL2/SDL.h>
+#include <iostream>
 
 // Function declarations
 bool initRenderer();
