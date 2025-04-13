@@ -33,9 +33,6 @@ bool initRenderer() {
 void drawGrid() {
     if (!renderer) return;
 
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Set background color to black
-    SDL_RenderClear(renderer);
-
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // Set line color to white
 
     int gridSize = 50; // Size of each grid cell
@@ -51,20 +48,17 @@ void drawGrid() {
     for (int y = 0; y <= windowHeight; y += gridSize) {
         SDL_RenderDrawLine(renderer, 0, y, windowWidth, y);
     }
-
-    SDL_RenderPresent(renderer);
 }
 
-void drawPlayer(SDL_Renderer *renderer, Player* player) {
+void drawPlayer(Player* player) {
     SDL_Rect playerRect;
     playerRect.x = static_cast<int>(player->x);
     playerRect.y = static_cast<int>(player->y);
     playerRect.w = 50; // Width of the player
     playerRect.h = 50; // Height of the player
-    SDL_RenderDrawRect(renderer, &playerRect);
+
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Set player color to red
     SDL_RenderFillRect(renderer, &playerRect);
-    SDL_RenderPresent(renderer);
 }
 
 void updateRenderer(Player* player) {
@@ -78,9 +72,9 @@ void updateRenderer(Player* player) {
     drawGrid();
 
     // Draw the player
-    drawPlayer(renderer, player);
+    drawPlayer(player);
 
-    // Present the renderer
+    // Present the renderer (only once per frame)
     SDL_RenderPresent(renderer);
 }
 

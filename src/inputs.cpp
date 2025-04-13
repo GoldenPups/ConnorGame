@@ -1,23 +1,29 @@
-void handleInputs(){
+#include "inputs.h"
+#include "renderer.h"
+#include <iostream>
+
+using namespace std;
+
+void handleInputs(SDL_Event& event, bool &running, Player* player){
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
             running = false;
         } else if (event.type == SDL_KEYDOWN) {
             switch (event.key.keysym.sym) {
                 case SDLK_UP:
-                    player->vy = -1.0f; // Move up
+                    player->vy = - MOVEMENT_SCALE; // Move up
                     cout << "UP" << endl;
                     break;
                 case SDLK_DOWN:
-                    player->vy = 1.0f; // Move down
+                    player->vy = MOVEMENT_SCALE; // Move down
                     cout << "DOWN" << endl;
                     break;
                 case SDLK_LEFT:
-                    player->vx = -1.0f; // Move left
+                    player->vx = - MOVEMENT_SCALE; // Move left
                     cout << "LEFT" << endl;
                     break;
                 case SDLK_RIGHT:
-                    player->vx = 1.0f; // Move right
+                    player->vx = MOVEMENT_SCALE; // Move right
                     cout << "RIGHT" << endl;
                     break;
             }

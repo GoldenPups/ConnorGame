@@ -5,10 +5,16 @@
 
 void cleanUp() {
     closeRenderer();
+    SDL_Quit();
 }
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
+
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) != 0) {
+        std::cerr << "SDL Initialization failed: " << SDL_GetError() << std::endl;
+        return 1;
+    }
 
     // Initialize and run the renderers
     if (!initRenderer()) {
@@ -23,7 +29,7 @@ int main() {
 
     while (running) {
         // Process events
-        handleInputs();
+        handleInputs(event, running, player);
 
         // Update physics
         updatePhysics(player, 0.016f); // Assuming a fixed timestep of 16ms
