@@ -5,18 +5,12 @@ SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;
 
 bool initRenderer() {
-    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
-        return false;
-    }
-
     window = SDL_CreateWindow(window_Title,
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
         window_Width, window_Height, SDL_WINDOW_SHOWN);
 
     if (!window) {
         std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
-        SDL_Quit();
         return false;
     }
 
@@ -24,17 +18,14 @@ bool initRenderer() {
     if (!renderer) {
         std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
         SDL_DestroyWindow(window);
-        SDL_Quit();
         return false;
     }
 
-    // Initialize SDL_image for JPG support
-    if (!(IMG_Init(IMG_INIT_JPG) & IMG_INIT_JPG)) {
-        std::cerr << "SDL_image initialization failed: " << IMG_GetError() << std::endl;
-        SDL_DestroyRenderer(renderer);
-        SDL_DestroyWindow(window);
-        SDL_Quit();
-        return false;
+    if (!(IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG) & (IMG_INIT_PNG | IMG_INIT_JPG))) {
+        std::cerr << "SDL_image Initialization failed: " << IMG_GetError() << std::endl;
+        IMG_Quit();
+        cleanUp();
+        return 1;
     }
 
     return true;
@@ -71,38 +62,26 @@ void drawPlayer(Player* player) {
     SDL_RenderFillRect(renderer, &playerRect);
 }
 
-void drawImage(const char* filePath, int x, int y, int width, int height) {
-    if (!renderer) return;
-    
-    std::cerr << "Loading image from: " << filePath << std::endl;
-
-    // Load the image as a surface
-    SDL_Surface* imageSurface = IMG_Load(filePath);
+SDL_Texture* loadTextureFromFile(const char* filePath) {
+    SDL_Surface* imageSurface = IMG_Load(filePath); // loadTextureFromFile
     if (!imageSurface) {
         std::cerr << "Failed to load image: " << IMG_GetError() << std::endl;
-        return;
+        return nullptr;
     }
 
-    // Create a texture from the surface
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, imageSurface);
-    SDL_FreeSurface(imageSurface); // Free the surface after creating the texture
+    SDL_FreeSurface(imageSurface);
     if (!texture) {
         std::cerr << "Failed to create texture: " << SDL_GetError() << std::endl;
-        return;
     }
+    return texture;
+}
 
-    // Define the destination rectangle
-    SDL_Rect destRect;
-    destRect.x = x;
-    destRect.y = y;
-    destRect.w = width;
-    destRect.h = height;
+void drawImage(SDL_Texture* texture, int x, int y, int width, int height) {
+    if (!renderer || !texture) return;
 
-    // Copy the texture to the renderer
+    SDL_Rect destRect = {x, y, width, height};
     SDL_RenderCopy(renderer, texture, nullptr, &destRect);
-
-    // Destroy the texture after rendering
-    SDL_DestroyTexture(texture);
 }
 
 void updateRenderer(Player* player) {

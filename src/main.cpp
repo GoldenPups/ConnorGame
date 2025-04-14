@@ -1,4 +1,6 @@
 #include <iostream>
+#include <SDL.h>      // Include SDL2 header for SDL_Texture and other SDL functions
+#include <SDL_image.h> // Include SDL_image header for texture handling
 #include "physics.h"  // Include physics header
 #include "renderer.h"  // Include the renderer header
 #include "inputs.h"   // Include the inputs header
@@ -21,6 +23,21 @@ int main() {
         return 1;
     }
 
+    // Initialize SDL_image
+    if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
+        std::cerr << "SDL_image Initialization failed: " << IMG_GetError() << std::endl;
+        IMG_Quit();
+        cleanUp();
+        return 1;
+    }
+
+    // Load player texture
+    SDL_Texture* playerTexture = loadTextureFromFile("assets/todd-howard/toddHoward.jpg"); // Ensure the correct path is passed as a string
+    if (!playerTexture) {
+        cleanUp();
+        return 1;
+    }
+
     // Create a player object
     Player* player = createPlayer(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -37,8 +54,8 @@ int main() {
         // Render the grid (or other game elements)
         drawGrid();
         
-        // Update the renderer
-        drawImage("todd-howard/toddHoward.jpg", player->x, player->y, 50, 50); // Draw the image at player's position
+        // Draw the player texture
+        drawImage(playerTexture, player->x, player->y, 50, 50); // Use preloaded texture
         updateRenderer(player);
 
         // Delay to control frame rate
@@ -46,6 +63,7 @@ int main() {
     }
 
     // Clean up
+    SDL_DestroyTexture(playerTexture);
     destroyPhysics(player);
     cleanUp();
 
