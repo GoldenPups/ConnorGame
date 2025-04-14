@@ -1,4 +1,5 @@
 #include "renderer.h"
+#include <SDL2/SDL_image.h>
 
 SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;
@@ -22,6 +23,15 @@ bool initRenderer() {
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (!renderer) {
         std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return false;
+    }
+
+    // Initialize SDL_image for JPG support
+    if (!(IMG_Init(IMG_INIT_JPG) & IMG_INIT_JPG)) {
+        std::cerr << "SDL_image initialization failed: " << IMG_GetError() << std::endl;
+        SDL_DestroyRenderer(renderer);
         SDL_DestroyWindow(window);
         SDL_Quit();
         return false;
@@ -59,6 +69,40 @@ void drawPlayer(Player* player) {
 
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Set player color to red
     SDL_RenderFillRect(renderer, &playerRect);
+}
+
+void drawImage(const char* filePath, int x, int y, int width, int height) {
+    if (!renderer) return;
+    
+    std::cerr << "Loading image from: " << filePath << std::endl;
+
+    // Load the image as a surface
+    SDL_Surface* imageSurface = IMG_Load(filePath);
+    if (!imageSurface) {
+        std::cerr << "Failed to load image: " << IMG_GetError() << std::endl;
+        return;
+    }
+
+    // Create a texture from the surface
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, imageSurface);
+    SDL_FreeSurface(imageSurface); // Free the surface after creating the texture
+    if (!texture) {
+        std::cerr << "Failed to create texture: " << SDL_GetError() << std::endl;
+        return;
+    }
+
+    // Define the destination rectangle
+    SDL_Rect destRect;
+    destRect.x = x;
+    destRect.y = y;
+    destRect.w = width;
+    destRect.h = height;
+
+    // Copy the texture to the renderer
+    SDL_RenderCopy(renderer, texture, nullptr, &destRect);
+
+    // Destroy the texture after rendering
+    SDL_DestroyTexture(texture);
 }
 
 void updateRenderer(Player* player) {

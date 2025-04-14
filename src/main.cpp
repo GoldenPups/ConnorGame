@@ -38,6 +38,7 @@ int main() {
         drawGrid();
         
         // Update the renderer
+        drawImage("todd-howard/toddHoward.jpg", player->x, player->y, 50, 50); // Draw the image at player's position
         updateRenderer(player);
 
         // Delay to control frame rate

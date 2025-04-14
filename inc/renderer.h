@@ -16,5 +16,6 @@ void closeRenderer();
 void drawGrid();
 void drawPlayer(Player* player);
 void updateRenderer(Player* player);
+void drawImage(const char* filePath, int x, int y, int width, int height);
 
 #endif
