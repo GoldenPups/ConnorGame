@@ -24,7 +24,8 @@ bool initRenderer() {
     if (!(IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG) & (IMG_INIT_PNG | IMG_INIT_JPG))) {
         std::cerr << "SDL_image Initialization failed: " << IMG_GetError() << std::endl;
         IMG_Quit();
-        cleanUp();
+        closeRenderer();
+        SDL_Quit();
         return 1;
     }
 
@@ -84,7 +85,7 @@ void drawImage(SDL_Texture* texture, int x, int y, int width, int height) {
     SDL_RenderCopy(renderer, texture, nullptr, &destRect);
 }
 
-void updateRenderer(Player* player) {
+void updateRenderer(Player* player, SDL_Texture* playerTexture) {
     if (!renderer) return;
 
     // Clear the screen
@@ -93,10 +94,13 @@ void updateRenderer(Player* player) {
 
     // Draw the grid
     drawGrid();
-
-    // Draw the player
+    
+    // Draw the player (optional, if you want a rectangle overlay)
     drawPlayer(player);
-
+    
+    // Draw the player texture
+    drawImage(playerTexture, static_cast<int>(player->x), static_cast<int>(player->y), 50, 50);
+    
     // Present the renderer (only once per frame)
     SDL_RenderPresent(renderer);
 }

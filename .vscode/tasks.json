@@ -17,7 +17,8 @@
                 "game",
                 "`sdl2-config",
                 "--cflags",
-                "--libs`"
+                "--libs`",
+                "-lSDL2_image",
             ],
             "options": {
                 "shell": {
