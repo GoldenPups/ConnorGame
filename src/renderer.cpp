@@ -1,25 +1,5 @@
 #include "renderer.h"
 
-bool initRenderer(SDL_Window** window, SDL_Renderer** renderer) {
-    *window = SDL_CreateWindow(window_Title,
-        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        window_Width, window_Height, SDL_WINDOW_SHOWN);
-
-    if (!*window) {
-        std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
-        return false;
-    }
-
-    *renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED);
-    if (!*renderer) {
-        std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
-        SDL_DestroyWindow(*window);
-        return false;
-    }
-
-    return true;
-}
-
 void drawGrid(SDL_Renderer* renderer) {
     if (!renderer) return;
 
@@ -68,15 +48,4 @@ void updateRenderer(SDL_Renderer* renderer, Player* player) {
 
     // Present the renderer (only once per frame)
     SDL_RenderPresent(renderer);
-}
-
-void closeRenderer(SDL_Window* window, SDL_Renderer* renderer) {
-    if (renderer) {
-        SDL_DestroyRenderer(renderer);
-        renderer = nullptr; // Avoid dangling pointer
-    }
-    if (window) {
-        SDL_DestroyWindow(window);
-        window = nullptr; // Avoid dangling pointer
-    }
 }

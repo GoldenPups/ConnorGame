@@ -5,8 +5,9 @@
 
 using namespace std;
 
-void handleInputs(SDL_Event& event, bool &running, Player* player) {
+void handleInputs(bool &running, Player* player) {
     static unordered_set<SDL_Keycode> keysPressed; // Track currently pressed keys
+    SDL_Event event;
 
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {

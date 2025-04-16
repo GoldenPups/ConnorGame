@@ -11,7 +11,6 @@
 
 // Function declarations
 bool initRenderer(SDL_Window** window, SDL_Renderer** renderer);
-void closeRenderer(SDL_Window* window, SDL_Renderer* renderer);
 void drawGrid(SDL_Renderer* renderer);
 void drawPlayer(SDL_Renderer* renderer, Player* player);
 void updateRenderer(SDL_Renderer* renderer, Player* player);
