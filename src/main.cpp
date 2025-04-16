@@ -20,7 +20,7 @@ int main() {
         return 1;
     }
 
-    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
     if (!renderer) {
         printf("Renderer could not be created! Error: %s\n", SDL_GetError());
         SDL_DestroyWindow(window);
@@ -38,7 +38,7 @@ int main() {
         handleInputs(running, player);
 
         // Update physics
-        // updatePhysics(player, 0.016f); // Assuming a fixed timestep of 16ms
+        updatePhysics(player, 0.016f); // Assuming a fixed timestep of 16ms
 
         // Update the renderer
         updateRenderer(renderer, player);

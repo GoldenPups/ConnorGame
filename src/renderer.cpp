@@ -39,13 +39,13 @@ void updateRenderer(SDL_Renderer* renderer, Player* player) {
     SDL_RenderClear(renderer);
 
     // Draw the grid
-    // drawGrid(renderer);
+    drawGrid(renderer);
 
-    SDL_SetRenderDrawColor(renderer, 225, 225, 225, 255); // Set background color to black
+    SDL_SetRenderDrawColor(renderer, 225, 225, 225, 255);
     SDL_RenderDrawLine(renderer, 0, window_Height / 2, window_Width, window_Height / 2); // Horizontal line
 
     // Draw the player
-    // drawPlayer(player);
+    drawPlayer(renderer, player);
     
     SDL_RenderPresent(renderer);
 }
