@@ -5,16 +5,15 @@
 #define window_Height 500
 #define window_Title "Connor Game"
 
-
 #include <SDL2/SDL.h>
 #include <iostream>
 #include "physics.h"
 
 // Function declarations
-bool initRenderer();
-void closeRenderer();
-void drawGrid();
-void drawPlayer(Player* player);
-void updateRenderer(Player* player);
+bool initRenderer(SDL_Window** window, SDL_Renderer** renderer);
+void closeRenderer(SDL_Window* window, SDL_Renderer* renderer);
+void drawGrid(SDL_Renderer* renderer);
+void drawPlayer(SDL_Renderer* renderer, Player* player);
+void updateRenderer(SDL_Renderer* renderer, Player* player);
 
 #endif

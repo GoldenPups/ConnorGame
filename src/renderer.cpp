@@ -1,36 +1,26 @@
 #include "renderer.h"
 
-SDL_Window* window = nullptr;
-SDL_Renderer* renderer = nullptr;
-
-bool initRenderer() {
-    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
-        return false;
-    }
-
-    window = SDL_CreateWindow(window_Title,
+bool initRenderer(SDL_Window** window, SDL_Renderer** renderer) {
+    *window = SDL_CreateWindow(window_Title,
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
         window_Width, window_Height, SDL_WINDOW_SHOWN);
 
-    if (!window) {
+    if (!*window) {
         std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
-        SDL_Quit();
         return false;
     }
 
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (!renderer) {
+    *renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED);
+    if (!*renderer) {
         std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
-        SDL_DestroyWindow(window);
-        SDL_Quit();
+        SDL_DestroyWindow(*window);
         return false;
     }
 
     return true;
 }
 
-void drawGrid() {
+void drawGrid(SDL_Renderer* renderer) {
     if (!renderer) return;
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // Set line color to white
@@ -50,7 +40,7 @@ void drawGrid() {
     }
 }
 
-void drawPlayer(Player* player) {
+void drawPlayer(SDL_Renderer* renderer, Player* player) {
     SDL_Rect playerRect;
     playerRect.x = static_cast<int>(player->x);
     playerRect.y = static_cast<int>(player->y);
@@ -59,9 +49,11 @@ void drawPlayer(Player* player) {
 
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Set player color to red
     SDL_RenderFillRect(renderer, &playerRect);
+
+    // If you add textures or surfaces here, ensure they are destroyed after use.
 }
 
-void updateRenderer(Player* player) {
+void updateRenderer(SDL_Renderer* renderer, Player* player) {
     if (!renderer) return;
 
     // Clear the screen
@@ -69,23 +61,22 @@ void updateRenderer(Player* player) {
     SDL_RenderClear(renderer);
 
     // Draw the grid
-    drawGrid();
+    drawGrid(renderer);
 
     // Draw the player
-    drawPlayer(player);
+    drawPlayer(renderer, player);
 
     // Present the renderer (only once per frame)
     SDL_RenderPresent(renderer);
 }
 
-void closeRenderer() {
+void closeRenderer(SDL_Window* window, SDL_Renderer* renderer) {
     if (renderer) {
         SDL_DestroyRenderer(renderer);
-        renderer = nullptr;
+        renderer = nullptr; // Avoid dangling pointer
     }
     if (window) {
         SDL_DestroyWindow(window);
-        window = nullptr;
+        window = nullptr; // Avoid dangling pointer
     }
-    SDL_Quit();
 }
