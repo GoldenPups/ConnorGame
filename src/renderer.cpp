@@ -29,8 +29,6 @@ void drawPlayer(SDL_Renderer* renderer, Player* player) {
 
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Set player color to red
     SDL_RenderFillRect(renderer, &playerRect);
-
-    // If you add textures or surfaces here, ensure they are destroyed after use.
 }
 
 void updateRenderer(SDL_Renderer* renderer, Player* player) {
@@ -41,11 +39,13 @@ void updateRenderer(SDL_Renderer* renderer, Player* player) {
     SDL_RenderClear(renderer);
 
     // Draw the grid
-    drawGrid(renderer);
+    // drawGrid(renderer);
+
+    SDL_SetRenderDrawColor(renderer, 225, 225, 225, 255); // Set background color to black
+    SDL_RenderDrawLine(renderer, 0, window_Height / 2, window_Width, window_Height / 2); // Horizontal line
 
     // Draw the player
-    drawPlayer(renderer, player);
-
-    // Present the renderer (only once per frame)
+    // drawPlayer(player);
+    
     SDL_RenderPresent(renderer);
 }

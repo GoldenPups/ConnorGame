@@ -2,6 +2,7 @@
 #include "physics.h"  // Include physics header
 #include "renderer.h"  // Include the renderer header
 #include "inputs.h"   // Include the inputs header
+#include <stdio.h>
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
@@ -11,7 +12,8 @@ int main() {
         return 1;
     }
 
-    SDL_Window *window = SDL_CreateWindow("Brick Breaker", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
+    SDL_Window *window = SDL_CreateWindow("Connor-Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
+                                            window_Width, window_Height, SDL_WINDOW_SHOWN);
     if (!window) {
         printf("Window could not be created! Error: %s\n", SDL_GetError());
         SDL_Quit();
@@ -36,8 +38,8 @@ int main() {
         handleInputs(running, player);
 
         // Update physics
-        updatePhysics(player, 0.016f); // Assuming a fixed timestep of 16ms
-        
+        // updatePhysics(player, 0.016f); // Assuming a fixed timestep of 16ms
+
         // Update the renderer
         updateRenderer(renderer, player);
 
