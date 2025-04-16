@@ -4,7 +4,7 @@
 #include "physics.h"
 #include "renderer.h"
 
-void handleInputs(SDL_Event& event, bool &running, Player* player);
+void handleInputs(bool &running, Player* player);
 
 #define MOVEMENT_SCALE 100
 
