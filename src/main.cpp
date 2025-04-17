@@ -30,8 +30,8 @@ int main() {
     }
     
     // Create a player object
-    Player* player = createPlayer(0.0f, 0.0f, 0.0f, 0.0f, 50, 50); 
-    World* world = createWorld(); 
+    World* world = createWorld();
+    Player* player = createPlayer(-world->x, -world->y, 0, 0, 50, 50); 
 
     bool running = true;
 
