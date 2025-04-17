@@ -1,22 +1,28 @@
 #include "renderer.h"
 
-void drawGrid(SDL_Renderer* renderer) {
+void drawWorld(SDL_Renderer* renderer, World* world) {
     if (!renderer) return;
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // Set line color to white
 
+    int offsetX = world -> x;
+    int offsetY = world -> y;
+    int worldWidth = world -> width;
+    int worldHeight = world -> height;
     int gridSize = 50; // Size of each grid cell
-    int windowWidth = window_Width;
-    int windowHeight = window_Height;
+    int worldTop = -offsetY;
+    int worldBottom = worldHeight - offsetY;
+    int worldLeft = -offsetX;
+    int worldRight = worldWidth - offsetX;
 
     // Draw vertical lines
-    for (int x = 0; x <= windowWidth; x += gridSize) {
-        SDL_RenderDrawLine(renderer, x, 0, x, windowHeight);
+    for (int x = worldLeft; x <= worldRight; x += gridSize) {
+        SDL_RenderDrawLine(renderer, x, worldTop, x, worldBottom);
     }
 
     // Draw horizontal lines
-    for (int y = 0; y <= windowHeight; y += gridSize) {
-        SDL_RenderDrawLine(renderer, 0, y, windowWidth, y);
+    for (int y = worldTop; y <= worldBottom; y += gridSize) {
+        SDL_RenderDrawLine(renderer, worldLeft, y, worldRight, y);
     }
 }
 
@@ -24,14 +30,14 @@ void drawPlayer(SDL_Renderer* renderer, Player* player) {
     SDL_Rect playerRect;
     playerRect.x = static_cast<int>(player->x);
     playerRect.y = static_cast<int>(player->y);
-    playerRect.w = 50; // Width of the player
-    playerRect.h = 50; // Height of the player
+    playerRect.w = player->width; // Width of the player
+    playerRect.h = player->height; // Height of the player
 
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Set player color to red
     SDL_RenderFillRect(renderer, &playerRect);
 }
 
-void updateRenderer(SDL_Renderer* renderer, Player* player) {
+void updateRenderer(SDL_Renderer* renderer, Player* player, World* world) {
     if (!renderer) return;
 
     // Clear the screen
@@ -39,10 +45,9 @@ void updateRenderer(SDL_Renderer* renderer, Player* player) {
     SDL_RenderClear(renderer);
 
     // Draw the grid
-    drawGrid(renderer);
+    drawWorld(renderer, world);
 
     SDL_SetRenderDrawColor(renderer, 225, 225, 225, 255);
-    SDL_RenderDrawLine(renderer, 0, window_Height / 2, window_Width, window_Height / 2); // Horizontal line
 
     // Draw the player
     drawPlayer(renderer, player);

@@ -2,6 +2,7 @@
 #include "physics.h"  // Include physics header
 #include "renderer.h"  // Include the renderer header
 #include "inputs.h"   // Include the inputs header
+#include "world1.h"   // Include the world header
 #include <stdio.h>
 
 int main() {
@@ -29,7 +30,8 @@ int main() {
     }
     
     // Create a player object
-    Player* player = createPlayer(0.0f, 0.0f, 0.0f, 0.0f);
+    Player* player = createPlayer(0.0f, 0.0f, 0.0f, 0.0f, 50, 50); 
+    World* world = createWorld(); 
 
     bool running = true;
 
@@ -38,10 +40,10 @@ int main() {
         handleInputs(running, player);
 
         // Update physics
-        updatePhysics(player, 0.016f); // Assuming a fixed timestep of 16ms
+        updatePhysics(player, world, 0.016f); // Assuming a fixed timestep of 16ms
 
         // Update the renderer
-        updateRenderer(renderer, player);
+        updateRenderer(renderer, player, world);
 
         // Delay to control frame rate
         SDL_Delay(16); // ~60 FPS
@@ -49,6 +51,7 @@ int main() {
 
     // Clean up
     destroyPhysics(player);
+    destroyWorld(world);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();

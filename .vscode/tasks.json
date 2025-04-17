@@ -13,6 +13,7 @@
                 "src/renderer.cpp",
                 "src/physics.cpp",
                 "src/inputs.cpp",
+                "src/world.cpp",
                 "-o",
                 "game",
                 "`sdl2-config",

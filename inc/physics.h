@@ -1,7 +1,7 @@
 #ifndef PHYSCIS_H
 #define PHYSCIS_H
 
-// Function declarations
+#include "world1.h"
 #include <time.h>
 
 struct Player {
@@ -9,10 +9,12 @@ struct Player {
     float y;
     float vx;
     float vy;
+    int width;
+    int height;
 };
 
-Player* createPlayer(float x, float y, float vx, float vy);
-void updatePhysics(Player* player, float dt);
+Player* createPlayer(float x, float y, float vx, float vy, int width, int height);
+void updatePhysics(Player* player, World* world, float dt);
 void destroyPhysics(Player* player);
 
 
