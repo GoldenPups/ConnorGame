@@ -43,20 +43,27 @@ int main() {
         return 1;
     }
 
-    // Create a player object
-    Player* player = createPlayer(0.0f, 0.0f, 0.0f, 0.0f);
+    GameState gameState; // Initialize game state
+    gameState.running = true;
+    gameState.player = createPlayer(0.0f, 0.0f, 0.0f, 0.0f); // Create a new player object
+    gameState.paused = false; // Initialize paused state
 
-    bool running = true;
-
-    while (running) {
+    while (gameState.running) {
         // Process events
-        handleInputs(running, player);
+        handleInputs(&gameState, gameState.player);
 
         // Update physics
-        updatePhysics(player, 0.016f); // Assuming a fixed timestep of 16ms
+        updatePhysics(gameState.player, 0.016f); // Assuming a fixed timestep of 16ms
 
         // Render everything
-        updateRenderer(renderer, player, playerTexture);
+        updateRenderer(renderer, gameState.player, playerTexture);
+
+        while(gameState.paused) {
+            PauseMenu(renderer); // Call pause menu function
+            SDL_RenderPresent(renderer); // Present the renderer
+            handlePauseMenuInputs(&gameState);
+            SDL_Delay(100); // Delay to avoid busy waiting
+        }
 
         // Delay to control frame rate
         SDL_Delay(16); // ~60 FPS
@@ -64,7 +71,7 @@ int main() {
 
     // Clean up
     SDL_DestroyTexture(playerTexture);
-    destroyPhysics(player);
+    destroyPhysics(gameState.player);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();

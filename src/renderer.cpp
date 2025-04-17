@@ -54,6 +54,20 @@ void drawImage(SDL_Renderer *renderer, SDL_Texture* texture, int x, int y, int w
     SDL_RenderCopy(renderer, texture, nullptr, &destRect);
 }
 
+void PauseMenu(SDL_Renderer *renderer) {
+    if (!renderer) return;
+
+    // Set the background color for the pause menu
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Black background
+    SDL_RenderClear(renderer);
+
+    // Draw pause menu text or options here (optional)
+    // ...
+
+    // Present the renderer (only once per frame)
+    SDL_RenderPresent(renderer);
+}
+
 void updateRenderer(SDL_Renderer *renderer, Player* player, SDL_Texture* playerTexture) {
     if (!renderer) return;
 

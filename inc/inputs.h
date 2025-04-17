@@ -4,7 +4,15 @@
 #include "physics.h"
 #include "renderer.h"
 
-void handleInputs(bool &running, Player* player);
+struct GameState {
+    bool running;
+    Player* player;
+    bool paused;
+};
+
+void handleInputs(GameState *gameState, Player* player);
+void handlePauseMenuInputs(GameState *GameState);
+
 
 #define MOVEMENT_SCALE 100
 

@@ -5,13 +5,13 @@
 
 using namespace std;
 
-void handleInputs(bool &running, Player* player) {
+void handleInputs(GameState *GameState, Player* player) {
     static unordered_set<SDL_Keycode> keysPressed; // Track currently pressed keys
     SDL_Event event;
 
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
-            running = false;
+            GameState->running = false;
         } else if (event.type == SDL_KEYDOWN) {
             keysPressed.insert(event.key.keysym.sym); // Add key to pressed set
 
@@ -32,6 +32,10 @@ void handleInputs(bool &running, Player* player) {
                     player->vx = MOVEMENT_SCALE; // Move right
                     cout << "RIGHT" << endl;
                     break;
+                case SDLK_ESCAPE:
+                    cout << "ESCAPE" << endl;
+                    GameState->paused = true; // Call pause menu function
+                    break;
             }
         } else if (event.type == SDL_KEYUP) {
             keysPressed.erase(event.key.keysym.sym); // Remove key from pressed set
@@ -51,6 +55,27 @@ void handleInputs(bool &running, Player* player) {
                 player->vx = MOVEMENT_SCALE;
             } else {
                 player->vx = 0.0f; // Stop horizontal movement
+            }
+        }
+    }
+}
+
+void handlePauseMenuInputs(GameState *GameState){
+    static unordered_set<SDL_Keycode> keysPressed; // Track currently pressed keys
+    SDL_Event event;
+
+    while (SDL_PollEvent(&event)) {
+        if (event.type == SDL_QUIT) {
+            GameState->paused = false;
+            GameState->running = false;
+        } else if (event.type == SDL_KEYDOWN) {
+            keysPressed.insert(event.key.keysym.sym); // Add key to pressed set
+
+            switch (event.key.keysym.sym) {
+                case SDLK_ESCAPE:
+                    cout << "ESCAPE" << endl;
+                    GameState->paused = false; // Unpause the game
+                    break;
             }
         }
     }
