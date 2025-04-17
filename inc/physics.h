@@ -1,7 +1,7 @@
 #ifndef PHYSCIS_H
 #define PHYSCIS_H
 
-#include "world1.h"
+#include "world.h"
 #include <time.h>
 
 struct Player {

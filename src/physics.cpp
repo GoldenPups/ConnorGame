@@ -1,5 +1,5 @@
 #include "physics.h"
-#include "world1.h"
+#include "world.h"
 #include "renderer.h"
 
 Player* createPlayer(int x, int y, float vx, float vy, int width, int height) {
@@ -11,6 +11,15 @@ Player* createPlayer(int x, int y, float vx, float vy, int width, int height) {
     player->width = width;
     player->height = height;
     return player;
+}
+
+void setPosPlayer(Player* player, int x, int y) {
+    player->x = x;
+    player->y = y;
+}
+void setVelPlayer(Player* player, float vx, float vy) {
+    player->vx = vx;
+    player->vy = vy;
 }
 
 bool checkCollision(Player* player, Object* object) {
@@ -60,8 +69,7 @@ void updatePhysics(Player* player, World* world, float dt) {
 void checkEvents(Player* player, World* world) {
     for (Object& event : world->events) {
         if (checkCollision(player, &event)) {
-            // Handle event (e.g., trigger an action)
-            std::cout << "Event triggered at (" << event.x << ", " << event.y << ")" << std::endl;
+           event.eventFunc(); // Call the event function
         }
     }
 }

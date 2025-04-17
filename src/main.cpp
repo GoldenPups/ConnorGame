@@ -2,7 +2,7 @@
 #include "physics.h"  // Include physics header
 #include "renderer.h"  // Include the renderer header
 #include "inputs.h"   // Include the inputs header
-#include "world1.h"   // Include the world header
+#include "world.h"   // Include the world header
 #include <stdio.h>
 
 int main() {
@@ -30,8 +30,8 @@ int main() {
     }
     
     // Create a player object
-    World* world = createWorld();
-    Player* player = createPlayer(-world->x + 50, -world->y + 50, 0, 0, 50, 50); 
+    World* world = createWorld1(100,100);
+    Player* player = createPlayer(125, 200, 0, 0, 50, 50); 
 
     bool running = true;
 

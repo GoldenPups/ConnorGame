@@ -1,18 +1,17 @@
-#ifndef WORLD1_H
-#define WORLD1_H
+#ifndef WORLD_H
+#define WORLD_H
 
 #include <vector>
 
-#define world_Width 1000
-#define world_Height 1000
-#define world_OriginX 100
-#define world_OriginY 100
 
 struct Object { 
     int x;      
     int y;      
     int width;  
     int height; 
+    // include rendering info
+    
+    void (*eventFunc)(); // function pointer for event handling
 };
 
 
@@ -29,7 +28,7 @@ struct World {
 
 
 
-World* createWorld();
+World* createWorld1(const int world_OriginX, const int world_OriginY);
 void destroyWorld(World* world);
 
 

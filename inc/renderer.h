@@ -8,7 +8,7 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 #include "physics.h"
-#include "world1.h"
+#include "world.h"
 
 // Function declarations
 bool initRenderer(SDL_Window** window, SDL_Renderer** renderer);
