@@ -8,12 +8,13 @@
 #define world_OriginX 100
 #define world_OriginY 100
 
-struct Obstacle {
-    int x;      // X position of the obstacle
-    int y;      // Y position of the obstacle
-    int width;  // Width of the obstacle
-    int height; // Height of the obstacle
+struct Object { 
+    int x;      
+    int y;      
+    int width;  
+    int height; 
 };
+
 
 // World position
 struct World {
@@ -21,7 +22,9 @@ struct World {
     int y;
     int width;
     int height;
-    std::vector<Obstacle> obstacles; // List of obstacles
+    std::vector<Object> obstacles; // colision checks
+    std::vector<Object> objects; // no colision checks (just renderer)
+    std::vector<Object> events; // event checks (dialog) 
 };
 
 

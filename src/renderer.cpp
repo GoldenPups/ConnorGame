@@ -26,7 +26,7 @@ void drawWorld(SDL_Renderer* renderer, World* world, int offsetX, int offsetY) {
 
 void drawObstacles(SDL_Renderer* renderer, World* world, int offsetX, int offsetY) {
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Set obstacle color to green
-    for (const Obstacle& obstacle : world->obstacles) {
+    for (const Object& obstacle : world->obstacles) {
         SDL_Rect rect = {obstacle.x + offsetX, obstacle.y + offsetY, obstacle.width, obstacle.height};
         SDL_RenderFillRect(renderer, &rect);
     }

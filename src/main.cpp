@@ -42,6 +42,9 @@ int main() {
         // Update physics
         updatePhysics(player, world, 0.016f); // Assuming a fixed timestep of 16ms
 
+        // Check for events
+        checkEvents(player, world);
+
         // Update the renderer
         updateRenderer(renderer, player, world);
 

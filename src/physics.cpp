@@ -13,11 +13,11 @@ Player* createPlayer(int x, int y, float vx, float vy, int width, int height) {
     return player;
 }
 
-bool checkCollision(Player* player, Obstacle* obstacle) {
-    return !(player->x + player->width < obstacle->x ||  // Player is to the left of the obstacle
-             player->x > obstacle->x + obstacle->width || // Player is to the right of the obstacle
-             player->y + player->height < obstacle->y ||  // Player is above the obstacle
-             player->y > obstacle->y + obstacle->height); // Player is below the obstacle
+bool checkCollision(Player* player, Object* object) {
+    return !(player->x + player->width < object->x ||  // Player is to the left of the obstacle
+             player->x > object->x + object->width || // Player is to the right of the obstacle
+             player->y + player->height < object->y ||  // Player is above the obstacle
+             player->y > object->y + object->height); // Player is below the obstacle
 }
 
 void updatePhysics(Player* player, World* world, float dt) {
@@ -46,7 +46,7 @@ void updatePhysics(Player* player, World* world, float dt) {
     }
 
     // Check for collision with world boundaries
-    for (Obstacle& obstacle : world->obstacles) {
+    for (Object& obstacle : world->obstacles) {
         if (checkCollision(player, &obstacle)) {
 
             // Handle collision (e.g., stop movement or adjust position)
@@ -55,6 +55,15 @@ void updatePhysics(Player* player, World* world, float dt) {
         }
     }
 
+}
+
+void checkEvents(Player* player, World* world) {
+    for (Object& event : world->events) {
+        if (checkCollision(player, &event)) {
+            // Handle event (e.g., trigger an action)
+            std::cout << "Event triggered at (" << event.x << ", " << event.y << ")" << std::endl;
+        }
+    }
 }
 
 void destroyPhysics(Player* player) {

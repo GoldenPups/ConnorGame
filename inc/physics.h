@@ -15,6 +15,7 @@ struct Player {
 
 Player* createPlayer(int x, int y, float vx, float vy, int width, int height);
 void updatePhysics(Player* player, World* world, float dt);
+void checkEvents(Player* player, World* world);
 void destroyPhysics(Player* player);
 
 
