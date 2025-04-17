@@ -24,39 +24,34 @@ void updatePhysics(Player* player, World* world, float dt) {
     player->x += static_cast<int>(player->vx * dt);
     player->y += static_cast<int>(player->vy * dt);
 
+    int startOffset = 25; //start scolling 50 pixels of edge
     int offsetX = world->x;
     int offsetY = world->y;
 
     // Check for window boundaries
-    int maxX = window_Width - player->width;
-    int maxY = window_Height - player->height;
-    int minX = 0;
-    int minY = 0;
+    int maxX = window_Width - player->width - startOffset;
+    int maxY = window_Height - player->height - startOffset;
+    int minX = startOffset;
+    int minY = startOffset;
 
     if(player->x + offsetX > maxX) {
-        world->x += player->x - maxX;
+        world->x -= player->x + offsetX - maxX;
     } else if(player->x + offsetX < minX) {
-        world->x += player->x;
+        world->x -= player->x + offsetX - minX;
     }
     if(player->y + offsetY > maxY) {
-        world->y += player->y - maxY;
+        world->y -= player->y + offsetY - maxY;
     } else if(player->y + offsetY < minY) {
-        world->y += player->y;
+        world->y -= player->y + offsetY - minY;
     }
 
     // Check for collision with world boundaries
     for (Obstacle& obstacle : world->obstacles) {
         if (checkCollision(player, &obstacle)) {
-            std::cout << "Collision detected with obstacle at (" << obstacle.x << ", " << obstacle.y << ")" << std::endl;
 
             // Handle collision (e.g., stop movement or adjust position)
-            if (player->vx > 0) player->x = obstacle.x - player->width; // Collision from the left
-            if (player->vx < 0) player->x = obstacle.x + obstacle.width; // Collision from the right
-            if (player->vy > 0) player->y = obstacle.y - player->height; // Collision from above
-            if (player->vy < 0) player->y = obstacle.y + obstacle.height; // Collision from below
-
-            player->vx = 0; // Stop horizontal movement
-            player->vy = 0; // Stop vertical movement
+            player->x -= static_cast<int>(player->vx * dt);
+            player->y -= static_cast<int>(player->vy * dt);
         }
     }
 
