@@ -8,10 +8,10 @@ struct GameState {
     bool running;
     Player* player;
     bool paused;
+    int pauseMenuCursor; // Cursor position in the pause menu
 };
 
 void handleInputs(GameState *gameState, Player* player);
-void handlePauseMenuInputs(GameState *GameState);
 
 
 #define MOVEMENT_SCALE 100

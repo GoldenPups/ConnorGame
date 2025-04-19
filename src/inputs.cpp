@@ -12,6 +12,7 @@ void handleInputs(GameState *GameState, Player* player) {
     while (SDL_PollEvent(&event)) {
         keysPressed.insert(event.key.keysym.sym); // Add key to pressed set
         if (event.type == SDL_QUIT) {
+            GameState->paused = false;
             GameState->running = false;
         }
         if(GameState->paused){
@@ -20,6 +21,18 @@ void handleInputs(GameState *GameState, Player* player) {
                     case SDLK_ESCAPE:
                         cout << "ESCAPE" << endl;
                         GameState->paused = false; // Unpause the game
+                        break;
+                    case SDLK_LEFT:
+                        cout << "LEFT" << endl;
+                        if(GameState->pauseMenuCursor > 0){
+                            GameState->pauseMenuCursor--;
+                        }
+                        break;
+                    case SDLK_RIGHT:
+                        cout << "RIGHT" << endl;
+                        if(GameState->pauseMenuCursor < NUM_PAUSE_MENU_OPTIONS - 1){
+                            GameState->pauseMenuCursor++;
+                        }
                         break;
                 }
             } else if (event.type == SDL_KEYUP) {

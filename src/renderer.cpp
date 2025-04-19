@@ -53,7 +53,7 @@ void drawImage(SDL_Renderer *renderer, SDL_Texture* texture, int x, int y, int w
     SDL_RenderCopy(renderer, texture, nullptr, &destRect);
 }
 
-void drawText(SDL_Renderer *renderer, const char* text, int x, int y, int fontSize, bool centered) {
+void drawText(SDL_Renderer *renderer, const char* text, int x, int y, int fontSize, bool centered, SDL_Color textColor) {
     if (!renderer) return;
 
     TTF_Font* font = TTF_OpenFont("assets/fonts/Debrosee-ALPnL.ttf", fontSize);
@@ -62,7 +62,6 @@ void drawText(SDL_Renderer *renderer, const char* text, int x, int y, int fontSi
         return;
     }
 
-    SDL_Color textColor = {255, 255, 255, 255}; // White color
     SDL_Surface* textSurface = TTF_RenderText_Solid(font, text, textColor);
     if (!textSurface) {
         std::cerr << "Failed to render text: " << TTF_GetError() << std::endl;
@@ -94,19 +93,66 @@ void drawText(SDL_Renderer *renderer, const char* text, int x, int y, int fontSi
     TTF_CloseFont(font);
 }
 
-void PauseMenu(SDL_Renderer *renderer) {
+void PauseMenu(SDL_Renderer *renderer, int cursor) {
     if (!renderer) return;
 
     // Set the background color for the pause menu
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Black background
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Black 
 
     const SDL_Rect pausedBar = {0, 0, window_Width, 100};
     SDL_RenderFillRect(renderer, &pausedBar); // Clear the screen
 
-    drawText(renderer, "Paused", window_Width / 2, 20, 50, 1); // Draw pause text
+    drawText(renderer, "Paused", window_Width / 2, 20, 50, 1, {255, 255, 255, 255}); // Draw pause text
 
     // Draw pause menu text or options here (optional)
-    // ...
+    // Options 1-4?
+    struct resume {
+        int x;
+        int y;
+    };
+    struct options {
+        int x;
+        int y;
+    };
+    struct save {
+        int x;
+        int y;
+    };
+    struct quit {
+        int x;
+        int y;
+    };
+
+
+    int optionSpacing = 150; // Space between each option
+    int totalWidth = (NUM_PAUSE_MENU_OPTIONS - 1) * optionSpacing; // Total width of all options combined
+    int startX = (window_Width - totalWidth) / 2; // Calculate starting X position to center the options
+
+    resume resume = {startX + optionSpacing * 0, 100};
+    options options = {startX + optionSpacing * 1, 100};
+    save save = {startX + optionSpacing * 2, 100};
+    quit quit = {startX + optionSpacing * 3, 100};
+
+    // Draw the menu options
+    drawText(renderer, "Resume", resume.x, resume.y, 30, 1, {255, 255, 255, 255});
+    drawText(renderer, "Options", options.x, options.y, 30, 1, {255, 255, 255, 255});
+    drawText(renderer, "Save", save.x, save.y, 30, 1, {255, 255, 255, 255});
+    drawText(renderer, "Quit", quit.x, quit.y, 30, 1, {255, 255, 255, 255});
+    
+    switch(cursor){
+        case 0:
+            drawText(renderer, "Resume", resume.x, resume.y, 30, 1, {252, 186, 3, 255});
+            break;
+        case 1:
+            drawText(renderer, "Options", options.x, options.y, 30, 1, {252, 186, 3, 255});
+            break;
+        case 2:
+            drawText(renderer, "Save", save.x, save.y, 30, 1, {252, 186, 3, 255});
+            break;
+        case 3:
+            drawText(renderer, "Quit", quit.x, quit.y, 30, 1, {252, 186, 3, 255});
+            break;
+    }
 
     // Present the renderer (only once per frame)
     SDL_RenderPresent(renderer);
