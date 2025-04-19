@@ -53,10 +53,10 @@ void drawImage(SDL_Renderer *renderer, SDL_Texture* texture, int x, int y, int w
     SDL_RenderCopy(renderer, texture, nullptr, &destRect);
 }
 
-void drawText(SDL_Renderer *renderer, const char* text, int x, int y, int fontSize) {
+void drawText(SDL_Renderer *renderer, const char* text, int x, int y, int fontSize, bool centered) {
     if (!renderer) return;
 
-    TTF_Font* font = TTF_OpenFont("assets/fonts/Debrosee-ALPnL.ttf", fontSize); // Font size 24
+    TTF_Font* font = TTF_OpenFont("assets/fonts/Debrosee-ALPnL.ttf", fontSize);
     if (!font) {
         std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
         return;
@@ -71,14 +71,23 @@ void drawText(SDL_Renderer *renderer, const char* text, int x, int y, int fontSi
     }
 
     SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-    SDL_FreeSurface(textSurface); // Free the surface after creating the texture
     if (!textTexture) {
         std::cerr << "Failed to create texture: " << SDL_GetError() << std::endl;
+        SDL_FreeSurface(textSurface);
         TTF_CloseFont(font);
         return;
     }
 
-    SDL_Rect textRect = {x, y, textSurface->w, textSurface->h}; // Position and size
+    // Calculate the text rectangle
+    SDL_Rect textRect = {x, y, textSurface->w, textSurface->h};
+
+    // Center the text on the X coordinate if `centered` is true
+    if (centered) {
+        textRect.x = x - (textSurface->w / 2); // Adjust X to center the text
+    }
+
+    SDL_FreeSurface(textSurface); // Free the surface after creating the texture
+
     SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
 
     SDL_DestroyTexture(textTexture);
@@ -90,10 +99,11 @@ void PauseMenu(SDL_Renderer *renderer) {
 
     // Set the background color for the pause menu
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Black background
+
     const SDL_Rect pausedBar = {0, 0, window_Width, 100};
     SDL_RenderFillRect(renderer, &pausedBar); // Clear the screen
 
-    drawText(renderer, "Paused", window_Width / 2 - 50, 20, 50); // Draw pause text
+    drawText(renderer, "Paused", window_Width / 2, 20, 50, 1); // Draw pause text
 
     // Draw pause menu text or options here (optional)
     // ...
