@@ -123,15 +123,15 @@ void PauseMenu(SDL_Renderer *renderer, int cursor) {
         int y;
     };
 
-
     int optionSpacing = 150; // Space between each option
     int totalWidth = (NUM_PAUSE_MENU_OPTIONS - 1) * optionSpacing; // Total width of all options combined
     int startX = (window_Width - totalWidth) / 2; // Calculate starting X position to center the options
 
-    resume resume = {startX + optionSpacing * 0, 100};
-    options options = {startX + optionSpacing * 1, 100};
-    save save = {startX + optionSpacing * 2, 100};
-    quit quit = {startX + optionSpacing * 3, 100};
+    int OptionsY= 70; // Y position for all options
+    resume resume = {startX + optionSpacing * 0, OptionsY};
+    options options = {startX + optionSpacing * 1, OptionsY};
+    save save = {startX + optionSpacing * 2, OptionsY};
+    quit quit = {startX + optionSpacing * 3, OptionsY};
 
     // Draw the menu options
     drawText(renderer, "Resume", resume.x, resume.y, 30, 1, {255, 255, 255, 255});

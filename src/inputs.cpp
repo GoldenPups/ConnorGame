@@ -34,6 +34,24 @@ void handleInputs(GameState *GameState, Player* player) {
                             GameState->pauseMenuCursor++;
                         }
                         break;
+                    case SDLK_RETURN:
+                        cout << "ENTER" << endl;
+                        switch (GameState->pauseMenuCursor) {
+                            case 0: // Resume
+                                GameState->paused = false; // Unpause the game
+                                break;
+                            case 1: // Options
+                                cout << "Options Menu" << endl;
+                                break;
+                            case 2: // Save
+                                cout << "Save Game" << endl;
+                                break;
+                            case 3: // Quit
+                                GameState->paused = false; // Unpause the game
+                                GameState->running = false; // Exit the game
+                                break;
+                        }
+                        break;
                 }
             } else if (event.type == SDL_KEYUP) {
                 keysPressed.erase(event.key.keysym.sym); // Remove key from pressed set
