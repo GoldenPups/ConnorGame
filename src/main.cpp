@@ -69,8 +69,8 @@ int main() {
         while(gameState.paused) {
             PauseMenu(renderer); // Call pause menu function
             SDL_RenderPresent(renderer); // Present the renderer
-            handleInputs(&gameState, gameState.player);
             SDL_Delay(100); // Delay to avoid busy waiting
+            handleInputs(&gameState, gameState.player);
         }
 
         // Delay to control frame rate

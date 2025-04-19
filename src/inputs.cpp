@@ -13,13 +13,17 @@ void handleInputs(GameState *GameState, Player* player) {
         keysPressed.insert(event.key.keysym.sym); // Add key to pressed set
         if (event.type == SDL_QUIT) {
             GameState->running = false;
-        } else 
+        }
         if(GameState->paused){
-            switch (event.key.keysym.sym) {
-                case SDLK_ESCAPE:
-                    cout << "ESCAPE" << endl;
-                    GameState->paused = false; // Unpause the game
-                    break;
+            if (event.type == SDL_KEYDOWN) {
+                switch (event.key.keysym.sym) {
+                    case SDLK_ESCAPE:
+                        cout << "ESCAPE" << endl;
+                        GameState->paused = false; // Unpause the game
+                        break;
+                }
+            } else if (event.type == SDL_KEYUP) {
+                keysPressed.erase(event.key.keysym.sym); // Remove key from pressed set
             }
         } else {
             if (event.type == SDL_KEYDOWN) {
