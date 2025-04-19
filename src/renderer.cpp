@@ -1,5 +1,4 @@
 #include "renderer.h"
-#include <SDL2/SDL_image.h>
 
 void drawGrid(SDL_Renderer* renderer) {
     if (!renderer) return;
@@ -54,12 +53,47 @@ void drawImage(SDL_Renderer *renderer, SDL_Texture* texture, int x, int y, int w
     SDL_RenderCopy(renderer, texture, nullptr, &destRect);
 }
 
+void drawText(SDL_Renderer *renderer, const char* text, int x, int y, int fontSize) {
+    if (!renderer) return;
+
+    TTF_Font* font = TTF_OpenFont("assets/fonts/Debrosee-ALPnL.ttf", fontSize); // Font size 24
+    if (!font) {
+        std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
+        return;
+    }
+
+    SDL_Color textColor = {255, 255, 255, 255}; // White color
+    SDL_Surface* textSurface = TTF_RenderText_Solid(font, text, textColor);
+    if (!textSurface) {
+        std::cerr << "Failed to render text: " << TTF_GetError() << std::endl;
+        TTF_CloseFont(font);
+        return;
+    }
+
+    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+    SDL_FreeSurface(textSurface); // Free the surface after creating the texture
+    if (!textTexture) {
+        std::cerr << "Failed to create texture: " << SDL_GetError() << std::endl;
+        TTF_CloseFont(font);
+        return;
+    }
+
+    SDL_Rect textRect = {x, y, textSurface->w, textSurface->h}; // Position and size
+    SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
+
+    SDL_DestroyTexture(textTexture);
+    TTF_CloseFont(font);
+}
+
 void PauseMenu(SDL_Renderer *renderer) {
     if (!renderer) return;
 
     // Set the background color for the pause menu
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Black background
-    SDL_RenderClear(renderer);
+    const SDL_Rect pausedBar = {0, 0, window_Width, 100};
+    SDL_RenderFillRect(renderer, &pausedBar); // Clear the screen
+
+    drawText(renderer, "Paused", window_Width / 2 - 50, 20, 50); // Draw pause text
 
     // Draw pause menu text or options here (optional)
     // ...

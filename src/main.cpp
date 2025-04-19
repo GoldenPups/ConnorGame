@@ -9,11 +9,18 @@
 int main() {
     std::cout << "Hello, World!" << std::endl;
 
+    // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         printf("SDL could not initialize! Error: %s\n", SDL_GetError());
         return 1;
     }
+    // Initialize SDL_ttf
+    if (TTF_Init() == -1) {
+        std::cerr << "Failed to initialize SDL_ttf: " << TTF_GetError() << std::endl;
+        return 1;
+    }
 
+    // Initialize SDL_Window
     SDL_Window *window = SDL_CreateWindow("Connor-Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
                                             window_Width, window_Height, SDL_WINDOW_SHOWN);
     if (!window) {
@@ -29,6 +36,7 @@ int main() {
         return 1;
     }
 
+    // Initialize SDL_renderer
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
     if (!renderer) {
         printf("Renderer could not be created! Error: %s\n", SDL_GetError());
@@ -75,6 +83,7 @@ int main() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+    TTF_Quit();
 
     return 0;
 }

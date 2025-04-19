@@ -19,6 +19,7 @@
                 "--cflags",
                 "--libs`",
                 "-lSDL2_image",
+                "-lSDL2_ttf",
             ],
             "options": {
                 "shell": {
