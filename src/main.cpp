@@ -4,6 +4,7 @@
 #include "physics.h"  // Include physics header
 #include "renderer.h"  // Include the renderer header
 #include "inputs.h"   // Include the inputs header
+#include "save.h" // Include the game state header
 #include <stdio.h>
 
 int main() {

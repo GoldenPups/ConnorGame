@@ -3,16 +3,11 @@
 
 #include "physics.h"
 #include "renderer.h"
-
-struct GameState {
-    bool running;
-    Player* player;
-    bool paused;
-    int pauseMenuCursor; // Cursor position in the pause menu
-};
+#include "save.h"
+#include <iostream>
+#include <unordered_set>
 
 void handleInputs(GameState *gameState, Player* player);
-
 
 #define MOVEMENT_SCALE 100
 

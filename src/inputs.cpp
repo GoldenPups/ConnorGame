@@ -1,7 +1,4 @@
 #include "inputs.h"
-#include "renderer.h"
-#include <iostream>
-#include <unordered_set>
 
 using namespace std;
 
@@ -41,10 +38,13 @@ void handleInputs(GameState *GameState, Player* player) {
                                 GameState->paused = false; // Unpause the game
                                 break;
                             case 1: // Options
-                                cout << "Options Menu" << endl;
+                                cout << "Load Game" << endl;
+                                loadGameState(*GameState); // Load the game state
+                                GameState->paused = false; // Unpause the game
                                 break;
                             case 2: // Save
                                 cout << "Save Game" << endl;
+                                saveGameState(*GameState); // Save the game state
                                 break;
                             case 3: // Quit
                                 GameState->paused = false; // Unpause the game
