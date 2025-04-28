@@ -79,6 +79,7 @@ int main() {
             SDL_Delay(100); // Delay to avoid busy waiting
             handleInputs(&gameState);
         }
+        gameState.pauseMenuCursor = 0;
 
         // Delay to control frame rate
         SDL_Delay(16); // ~60 FPS
