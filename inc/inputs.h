@@ -7,9 +7,10 @@
 #include <iostream>
 #include <unordered_set>
 
-void handleInputs(GameState *gameState, Player* player);
+void handleInputs(GameState *gameState);
 void handlePauseMenuInputs(GameState* GameState, SDL_Event& event);
-void handleGameplayInputs(GameState* GameState, Player* player, SDL_Event& event, std::unordered_set<SDL_Keycode>& keysPressed);
+void handleGameplayInputs(GameState* GameState, SDL_Event& event, std::unordered_set<SDL_Keycode>& keysPressed);
+void handleStartMenuInputs(GameState* gameState, SDL_Event& event);
 
 #define MOVEMENT_SCALE 100
 
