@@ -58,7 +58,7 @@ int main() {
     gameState.pauseMenuCursor = 0; // Initialize pause menu cursor
 
     while(gameState.gameMenu == MAIN_MENU){
-        startScreen(renderer, &gameState.running); // Call start screen function
+        startScreen(renderer); // Call start screen function
     }
     
 

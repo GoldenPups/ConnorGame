@@ -13,8 +13,6 @@
 
 struct GameState {
     Player* player;
-    bool running;
-    bool paused;
     char gameMenu; // R:Running, P:Paused, M:Main Menu, 0:Quit
 
     int pauseMenuCursor; // TODO: GET RID OF THIS!!

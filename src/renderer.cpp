@@ -158,7 +158,7 @@ void PauseMenu(SDL_Renderer *renderer, int cursor) {
     SDL_RenderPresent(renderer);
 }
 
-void startScreen(SDL_Renderer *renderer, bool* running) {
+void startScreen(SDL_Renderer *renderer) {
     if (!renderer) return;
 
     // Set the background color for the start screen

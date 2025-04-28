@@ -21,6 +21,6 @@ void updateRenderer(SDL_Renderer* renderer, Player* player, SDL_Texture* playerT
 SDL_Texture* loadTextureFromFile(SDL_Renderer *renderer, const char* filePath);
 void drawImage(SDL_Renderer *renderer, SDL_Texture* texture, int x, int y, int width, int height);
 void PauseMenu(SDL_Renderer *renderer, int cursor);
-void startScreen(SDL_Renderer *renderer, bool* running);
+void startScreen(SDL_Renderer *renderer);
 
 #endif
