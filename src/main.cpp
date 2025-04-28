@@ -51,18 +51,16 @@ int main() {
     if (!playerTexture) {
         return 1;
     }
-
+    
     GameState gameState; // Initialize game state
-    gameState.gameMenu = MAIN_MENU;
-    gameState.player = createPlayer(0.0f, 0.0f, 0.0f, 0.0f); // Create a new player object
-    gameState.cursor = 0; // Initialize pause menu cursor
-
-    while(gameState.gameMenu == MAIN_MENU){
-        startScreen(renderer, gameState.cursor); // Call start screen function
-        handleInputs(&gameState); // Handle start menu inputs
-    }
+    intitializeGameState(&gameState);
 
     while (gameState.gameMenu != QUIT) {
+        while(gameState.gameMenu == MAIN_MENU){
+            startScreen(renderer, gameState.cursor); // Call start screen function
+            handleInputs(&gameState); // Handle start menu inputs
+        }
+
         // Process events
         handleInputs(&gameState);
 

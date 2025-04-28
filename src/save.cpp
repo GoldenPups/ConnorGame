@@ -24,3 +24,9 @@ void loadGameState(GameState& gameState) {
         std::cerr << "Unable to open file for loading." << std::endl;
     }
 }
+
+void intitializeGameState(GameState* gameState) {
+    gameState->gameMenu = MAIN_MENU;
+    gameState->player = createPlayer(0.0f, 0.0f, 0.0f, 0.0f); // Create a new player object
+    gameState->cursor = 0; // Initialize pause menu cursor
+}

@@ -1,11 +1,12 @@
 #ifndef INPUTS_H
 #define INPUTS_H
 
+#include <iostream>
+#include <unordered_set>
+#include "inputs.h"
 #include "physics.h"
 #include "renderer.h"
 #include "save.h"
-#include <iostream>
-#include <unordered_set>
 
 void handleInputs(GameState *gameState);
 void handlePauseMenuInputs(GameState* GameState, SDL_Event& event);

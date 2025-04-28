@@ -1,4 +1,7 @@
 #include "inputs.h"
+#include "physics.h"
+#include "renderer.h"
+#include "save.h"
 
 using namespace std;
 
@@ -110,7 +113,7 @@ void handlePauseMenuInputs(GameState* gameState, SDL_Event& event) {
                         saveGameState(*gameState); // Save the game state
                         break;
                     case 3: // Quit
-                        gameState->gameMenu = QUIT; // Exit the game
+                        gameState->gameMenu = MAIN_MENU; // Exit the game
                         break;
                 }
                 break;
@@ -122,8 +125,24 @@ void handleStartMenuInputs(GameState* gameState, SDL_Event& event) {
     if (event.type == SDL_KEYDOWN) {
         switch (event.key.keysym.sym) {
             case SDLK_RETURN:
-                cout << "ENTER" << endl;
-                gameState->gameMenu = GAME; // Start the game
+                switch (gameState->cursor) {
+                    case 0: // "New Game", 
+                        intitializeGameState(gameState); // Initialize a new game state
+                        gameState->gameMenu = GAME; // Unpause the game
+                        break;
+                    case 1: // "Load", 
+                        cout << "Load Game" << endl;
+                        loadGameState(*gameState); // Load the game state
+                        gameState->gameMenu = GAME; // Unpause the game
+                        break;
+                    case 2: // "Settings", 
+                        cout << "Settings" << endl;
+                        
+                        break;
+                    case 3: // "Quit"
+                        gameState->gameMenu = QUIT; // Exit the game
+                        break;
+                }
                 break;
             case SDLK_ESCAPE:
                 cout << "ESCAPE" << endl;

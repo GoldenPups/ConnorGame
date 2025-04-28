@@ -20,4 +20,5 @@ struct GameState {
 
 void saveGameState(const GameState& gameState);
 void loadGameState(GameState& gameState);
+void intitializeGameState(GameState* gameState);
 #endif
