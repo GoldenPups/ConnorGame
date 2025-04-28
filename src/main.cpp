@@ -58,10 +58,9 @@ int main() {
     gameState.cursor = 0; // Initialize pause menu cursor
 
     while(gameState.gameMenu == MAIN_MENU){
-        startScreen(renderer); // Call start screen function
+        startScreen(renderer, gameState.cursor); // Call start screen function
         handleInputs(&gameState); // Handle start menu inputs
     }
-    
 
     while (gameState.gameMenu != QUIT) {
         // Process events

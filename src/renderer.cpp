@@ -1,4 +1,5 @@
 #include "renderer.h"
+#include "inputs.h"
 
 void drawGrid(SDL_Renderer* renderer) {
     if (!renderer) return;
@@ -93,6 +94,19 @@ void drawText(SDL_Renderer *renderer, const char* text, int x, int y, int fontSi
     TTF_CloseFont(font);
 }
 
+void drawOptions(SDL_Renderer *renderer, const std::vector<std::string>& options, int cursor, int yPosition) {
+    int optionSpacing = 150; // Space between each option
+    int totalWidth = (options.size() - 1) * optionSpacing; // Total width of all options combined
+    int startX = (window_Width - totalWidth) / 2; // Calculate starting X position to center the options
+
+    // Draw the menu options
+    for (size_t i = 0; i < options.size(); ++i) {
+        int optionX = startX + optionSpacing * i; // Calculate the X position for each option
+        SDL_Color color = (static_cast<int>(i) == cursor) ? SDL_Color{252, 186, 3, 255} : SDL_Color{255, 255, 255, 255};
+        drawText(renderer, options[i].c_str(), optionX, yPosition, 30, 1, color);
+    }
+}
+
 void PauseMenu(SDL_Renderer *renderer, int cursor) {
     if (!renderer) return;
 
@@ -123,42 +137,13 @@ void PauseMenu(SDL_Renderer *renderer, int cursor) {
         int y;
     };
 
-    int optionSpacing = 150; // Space between each option
-    int totalWidth = (NUM_PAUSE_MENU_OPTIONS - 1) * optionSpacing; // Total width of all options combined
-    int startX = (window_Width - totalWidth) / 2; // Calculate starting X position to center the options
-
-    int OptionsY= 70; // Y position for all options
-    resume resume = {startX + optionSpacing * 0, OptionsY};
-    options options = {startX + optionSpacing * 1, OptionsY};
-    save save = {startX + optionSpacing * 2, OptionsY};
-    quit quit = {startX + optionSpacing * 3, OptionsY};
-
-    // Draw the menu options
-    drawText(renderer, "Resume", resume.x, resume.y, 30, 1, {255, 255, 255, 255});
-    drawText(renderer, "Options", options.x, options.y, 30, 1, {255, 255, 255, 255});
-    drawText(renderer, "Save", save.x, save.y, 30, 1, {255, 255, 255, 255});
-    drawText(renderer, "Quit", quit.x, quit.y, 30, 1, {255, 255, 255, 255});
-    
-    switch(cursor){
-        case 0:
-            drawText(renderer, "Resume", resume.x, resume.y, 30, 1, {252, 186, 3, 255});
-            break;
-        case 1:
-            drawText(renderer, "Options", options.x, options.y, 30, 1, {252, 186, 3, 255});
-            break;
-        case 2:
-            drawText(renderer, "Save", save.x, save.y, 30, 1, {252, 186, 3, 255});
-            break;
-        case 3:
-            drawText(renderer, "Quit", quit.x, quit.y, 30, 1, {252, 186, 3, 255});
-            break;
-    }
+    drawOptions(renderer, {"Resume", "Options", "Save", "Quit"}, cursor, 70); // Draw options
 
     // Present the renderer (only once per frame)
     SDL_RenderPresent(renderer);
 }
 
-void startScreen(SDL_Renderer *renderer) {
+void startScreen(SDL_Renderer *renderer, int cursor) {
     if (!renderer) return;
 
     // Set the background color for the start screen
@@ -169,6 +154,8 @@ void startScreen(SDL_Renderer *renderer) {
 
     drawText(renderer, "Welcome to the Game!", window_Width / 2, window_Height / 2 - 50, 50, 1, {255, 255, 255, 255}); // Draw welcome text
     drawText(renderer, "Press Enter to Start", window_Width / 2, window_Height / 2 + 50, 30, 1, {255, 255, 255, 255}); // Draw instructions
+
+    drawOptions(renderer, {"New Game", "Load", "Settings", "Quit"}, cursor, window_Height / 2 + 100); // Draw options
 
     // Present the renderer (only once per frame)
     SDL_RenderPresent(renderer);

@@ -14,4 +14,7 @@ void handleStartMenuInputs(GameState* gameState, SDL_Event& event);
 
 #define MOVEMENT_SCALE 100
 
+#define NUM_PAUSE_MENU_OPTIONS 4
+#define NUM_MAIN_MENU_OPTIONS 4
+
 #endif

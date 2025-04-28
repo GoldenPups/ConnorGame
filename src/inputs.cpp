@@ -129,6 +129,18 @@ void handleStartMenuInputs(GameState* gameState, SDL_Event& event) {
                 cout << "ESCAPE" << endl;
                 gameState->gameMenu = QUIT; // Exit the game
                 break;
+            case SDLK_LEFT:
+                // cout << "LEFT" << endl;
+                if (gameState->cursor > 0) {
+                    gameState->cursor--;
+                }
+                break;
+            case SDLK_RIGHT:
+                // cout << "RIGHT" << endl;
+                if (gameState->cursor < NUM_MAIN_MENU_OPTIONS - 1) {
+                    gameState->cursor++;
+                }
+                break;
         }
     }
 }
