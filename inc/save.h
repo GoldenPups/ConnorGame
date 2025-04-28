@@ -15,7 +15,7 @@ struct GameState {
     Player* player;
     char gameMenu; // R:Running, P:Paused, M:Main Menu, 0:Quit
 
-    int pauseMenuCursor; // TODO: GET RID OF THIS!!
+    int cursor; // cursor used for multiple menus, set to zero by default
 };
 
 void saveGameState(const GameState& gameState);

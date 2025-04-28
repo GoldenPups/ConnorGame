@@ -84,19 +84,19 @@ void handlePauseMenuInputs(GameState* gameState, SDL_Event& event) {
                 break;
             case SDLK_LEFT:
                 // cout << "LEFT" << endl;
-                if (gameState->pauseMenuCursor > 0) {
-                    gameState->pauseMenuCursor--;
+                if (gameState->cursor > 0) {
+                    gameState->cursor--;
                 }
                 break;
             case SDLK_RIGHT:
                 // cout << "RIGHT" << endl;
-                if (gameState->pauseMenuCursor < NUM_PAUSE_MENU_OPTIONS - 1) {
-                    gameState->pauseMenuCursor++;
+                if (gameState->cursor < NUM_PAUSE_MENU_OPTIONS - 1) {
+                    gameState->cursor++;
                 }
                 break;
             case SDLK_RETURN:
                 // cout << "ENTER" << endl;
-                switch (gameState->pauseMenuCursor) {
+                switch (gameState->cursor) {
                     case 0: // Resume
                         gameState->gameMenu = GAME; // Unpause the game
                         break;

@@ -7,7 +7,6 @@ void saveGameState(const GameState& gameState) {
         outFile << gameState.gameMenu << std::endl;
         outFile << gameState.player->x << " " << gameState.player->y << " "
                 << gameState.player->vx << " " << gameState.player->vy << std::endl;
-        outFile << gameState.pauseMenuCursor << std::endl;
         outFile.close();
     } else {
         std::cerr << "Unable to open file for saving." << std::endl;
@@ -20,7 +19,6 @@ void loadGameState(GameState& gameState) {
         inFile >> gameState.gameMenu;
         inFile >> gameState.player->x >> gameState.player->y
                 >> gameState.player->vx >> gameState.player->vy;
-        inFile >> gameState.pauseMenuCursor;
         inFile.close();
     } else {
         std::cerr << "Unable to open file for loading." << std::endl;
