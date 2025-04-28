@@ -53,12 +53,16 @@ int main() {
     }
 
     GameState gameState; // Initialize game state
-    gameState.running = true;
+    gameState.gameMenu = GAME;
     gameState.player = createPlayer(0.0f, 0.0f, 0.0f, 0.0f); // Create a new player object
-    gameState.paused = false; // Initialize paused state
     gameState.pauseMenuCursor = 0; // Initialize pause menu cursor
 
-    while (gameState.running) {
+    while(gameState.gameMenu == MAIN_MENU){
+        startScreen(renderer, &gameState.running); // Call start screen function
+    }
+    
+
+    while (gameState.gameMenu != QUIT) {
         // Process events
         handleInputs(&gameState, gameState.player);
 
@@ -68,7 +72,7 @@ int main() {
         // Render everything
         updateRenderer(renderer, gameState.player, playerTexture);
 
-        while(gameState.paused) {
+        while(gameState.gameMenu == PAUSED){
             PauseMenu(renderer, gameState.pauseMenuCursor); // Call pause menu function
             SDL_RenderPresent(renderer); // Present the renderer
             SDL_Delay(100); // Delay to avoid busy waiting

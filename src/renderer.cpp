@@ -158,6 +158,22 @@ void PauseMenu(SDL_Renderer *renderer, int cursor) {
     SDL_RenderPresent(renderer);
 }
 
+void startScreen(SDL_Renderer *renderer, bool* running) {
+    if (!renderer) return;
+
+    // Set the background color for the start screen
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Black 
+
+    const SDL_Rect startBar = {0, 0, window_Width, window_Height};
+    SDL_RenderFillRect(renderer, &startBar); // Clear the screen
+
+    drawText(renderer, "Welcome to the Game!", window_Width / 2, window_Height / 2 - 50, 50, 1, {255, 255, 255, 255}); // Draw welcome text
+    drawText(renderer, "Press Enter to Start", window_Width / 2, window_Height / 2 + 50, 30, 1, {255, 255, 255, 255}); // Draw instructions
+
+    // Present the renderer (only once per frame)
+    SDL_RenderPresent(renderer);
+}
+
 void updateRenderer(SDL_Renderer *renderer, Player* player, SDL_Texture* playerTexture) {
     if (!renderer) return;
 

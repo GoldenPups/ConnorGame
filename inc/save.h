@@ -6,11 +6,18 @@
 #include <fstream>
 #include <string>
 
+#define GAME 'G'
+#define PAUSED 'P'
+#define MAIN_MENU 'M'
+#define QUIT '0'
+
 struct GameState {
-    bool running;
     Player* player;
+    bool running;
     bool paused;
-    int pauseMenuCursor; // Cursor position in the pause menu
+    char gameMenu; // R:Running, P:Paused, M:Main Menu, 0:Quit
+
+    int pauseMenuCursor; // TODO: GET RID OF THIS!!
 };
 
 void saveGameState(const GameState& gameState);
