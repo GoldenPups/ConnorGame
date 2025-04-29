@@ -103,7 +103,7 @@ void handlePauseMenuInputs(GameState* gameState, SDL_Event& event) {
                     case 0: // Resume
                         gameState->gameMenu = GAME; // Unpause the game
                         break;
-                    case 1: // Options
+                    case 1: // LOAD
                         cout << "Load Game" << endl;
                         loadGameState(*gameState); // Load the game state
                         gameState->gameMenu = GAME; // Unpause the game

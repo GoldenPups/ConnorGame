@@ -117,27 +117,7 @@ void PauseMenu(SDL_Renderer *renderer, int cursor) {
     SDL_RenderFillRect(renderer, &pausedBar); // Clear the screen
 
     drawText(renderer, "Paused", window_Width / 2, 20, 50, 1, {255, 255, 255, 255}); // Draw pause text
-
-    // Draw pause menu text or options here (optional)
-    // Options 1-4?
-    struct resume {
-        int x;
-        int y;
-    };
-    struct options {
-        int x;
-        int y;
-    };
-    struct save {
-        int x;
-        int y;
-    };
-    struct quit {
-        int x;
-        int y;
-    };
-
-    drawOptions(renderer, {"Resume", "Options", "Save", "Quit"}, cursor, 70); // Draw options
+    drawOptions(renderer, {"Resume", "Load", "Save", "Quit"}, cursor, 70); // Draw options
 
     // Present the renderer (only once per frame)
     SDL_RenderPresent(renderer);
