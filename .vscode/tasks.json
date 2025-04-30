@@ -14,6 +14,7 @@
                 "src/physics.cpp",
                 "src/inputs.cpp",
                 "src/save.cpp",
+                "src/world.cpp",
                 "-o",
                 "game",
                 "`sdl2-config",

@@ -1,32 +1,45 @@
 #include "renderer.h"
 #include "inputs.h"
 
-void drawGrid(SDL_Renderer* renderer) {
+void drawWorld(SDL_Renderer* renderer, World* world, int offsetX, int offsetY) {
     if (!renderer) return;
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // Set line color to white
 
+    int worldWidth = world -> width;
+    int worldHeight = world -> height;
     int gridSize = 50; // Size of each grid cell
-    int windowWidth = window_Width;
-    int windowHeight = window_Height;
+    int worldTop = offsetY;
+    int worldBottom = worldHeight + offsetY;
+    int worldLeft = offsetX;
+    int worldRight = worldWidth + offsetX;
 
     // Draw vertical lines
-    for (int x = 0; x <= windowWidth; x += gridSize) {
-        SDL_RenderDrawLine(renderer, x, 0, x, windowHeight);
+    for (int x = worldLeft; x <= worldRight; x += gridSize) {
+        SDL_RenderDrawLine(renderer, x, worldTop, x, worldBottom);
     }
 
     // Draw horizontal lines
-    for (int y = 0; y <= windowHeight; y += gridSize) {
-        SDL_RenderDrawLine(renderer, 0, y, windowWidth, y);
+    for (int y = worldTop; y <= worldBottom; y += gridSize) {
+        SDL_RenderDrawLine(renderer, worldLeft, y, worldRight, y);
     }
 }
 
-void drawPlayer(SDL_Renderer* renderer, Player* player) {
+void drawObstacles(SDL_Renderer* renderer, World* world, int offsetX, int offsetY) {
+    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Set obstacle color to green
+    for (const Object& obstacle : world->obstacles) {
+        SDL_Rect rect = {obstacle.x + offsetX, obstacle.y + offsetY, obstacle.width, obstacle.height};
+        SDL_RenderFillRect(renderer, &rect);
+    }
+}
+
+
+void drawPlayer(SDL_Renderer* renderer, Player* player, int offsetX, int offsetY) {
     SDL_Rect playerRect;
-    playerRect.x = static_cast<int>(player->x);
-    playerRect.y = static_cast<int>(player->y);
-    playerRect.w = 50; // Width of the player
-    playerRect.h = 50; // Height of the player
+    playerRect.x = static_cast<int>(player->x) + offsetX;
+    playerRect.y = static_cast<int>(player->y) + offsetY;
+    playerRect.w = player->width; // Width of the player
+    playerRect.h = player->height; // Height of the player
 
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Set player color to red
     SDL_RenderFillRect(renderer, &playerRect);
@@ -141,21 +154,28 @@ void startScreen(SDL_Renderer *renderer, int cursor) {
     SDL_RenderPresent(renderer);
 }
 
-void updateRenderer(SDL_Renderer *renderer, Player* player, SDL_Texture* playerTexture) {
+// void updateRenderer(SDL_Renderer *renderer, Player* player, SDL_Texture* playerTexture) {
+void updateRenderer(SDL_Renderer* renderer, Player* player, World* world) {
     if (!renderer) return;
 
     // Clear the screen
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Set background color to black
     SDL_RenderClear(renderer);
 
+    int offsetX = world -> x;
+    int offsetY = world -> y;
+
     // Draw the grid
-    drawGrid(renderer);
-    
-    // Draw the player (optional, if you want a rectangle overlay)
-    drawPlayer(renderer, player);
+    drawWorld(renderer, world, offsetX, offsetY);
+    drawObstacles(renderer, world, offsetX, offsetY);
+
+    SDL_SetRenderDrawColor(renderer, 225, 225, 225, 255);
+
+    // Draw the player
+    drawPlayer(renderer, player, offsetX, offsetY);
     
     // Draw the player texture
-    drawImage(renderer, playerTexture, static_cast<int>(player->x), static_cast<int>(player->y), 50, 50);
+    // drawImage(renderer, playerTexture, static_cast<int>(player->x), static_cast<int>(player->y), 50, 50);
     
     // Present the renderer (only once per frame)
     SDL_RenderPresent(renderer);

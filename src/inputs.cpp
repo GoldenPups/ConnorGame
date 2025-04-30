@@ -56,6 +56,7 @@ void handleGameplayInputs(GameState* gameState, SDL_Event& event, unordered_set<
                 gameState->gameMenu = PAUSED; // Pause the game
                 break;
         }
+        cout << gameState->player->vx << " " << gameState->player->vy << endl; // Debug output
     } else if (event.type == SDL_KEYUP) {
         keysPressed.erase(event.key.keysym.sym); // Remove key from pressed set
 

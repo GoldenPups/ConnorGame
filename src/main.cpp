@@ -5,6 +5,7 @@
 #include "renderer.h"  // Include the renderer header
 #include "inputs.h"   // Include the inputs header
 #include "save.h" // Include the game state header
+#include "world.h"   // Include the world header
 #include <stdio.h>
 
 int main() {
@@ -54,6 +55,9 @@ int main() {
     
     GameState gameState; // Initialize game state
     intitializeGameState(&gameState);
+    // Create a player object
+    World* world = createWorld1(100,100);
+    Player* player = createPlayer(300, 200, 0, 0, 50, 50); 
 
     while (gameState.gameMenu != QUIT) {
         while(gameState.gameMenu == MAIN_MENU){
@@ -63,13 +67,7 @@ int main() {
 
         // Process events
         handleInputs(&gameState);
-
-        // Update physics
-        updatePhysics(gameState.player, 0.016f); // Assuming a fixed timestep of 16ms
-
-        // Render everything
-        updateRenderer(renderer, gameState.player, playerTexture);
-
+        
         while(gameState.gameMenu == PAUSED){
             PauseMenu(renderer, gameState.cursor); // Call pause menu function
             SDL_RenderPresent(renderer); // Present the renderer
@@ -77,14 +75,26 @@ int main() {
             handleInputs(&gameState);
         }
         gameState.cursor = 0;
+        updatePhysics(gameState.player, world); // Assuming a fixed timestep of 16ms
+        
+        // Check for events
+        checkEvents(gameState.player, world);
+        
+        // Update the renderer
+        updateRenderer(renderer, gameState.player, world);
+
+        // // Render everything
+        // updateRenderer(renderer, gameState.player, playerTexture);
 
         // Delay to control frame rate
         SDL_Delay(16); // ~60 FPS
+        std::cout << gameState.player->x << " " << gameState.player->y << std::endl; // Debug output
     }
 
     // Clean up
     SDL_DestroyTexture(playerTexture);
     destroyPhysics(gameState.player);
+    destroyWorld(world);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
