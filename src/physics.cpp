@@ -43,6 +43,7 @@ void updatePhysics(Player* player, World* world) {
     int minX = startOffset;
     int minY = startOffset;
 
+    //Scroll the world if the player is close to the edges
     if(player->x + offsetX > maxX) {
         world->x -= player->x + offsetX - maxX;
     } else if(player->x + offsetX < minX) {
@@ -61,6 +62,7 @@ void updatePhysics(Player* player, World* world) {
             // Handle collision (e.g., stop movement or adjust position)
             player->x -= static_cast<int>(player->vx);
             player->y -= static_cast<int>(player->vy);
+            break; // Exit the loop after handling the first collision
         }
     }
 }

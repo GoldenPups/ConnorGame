@@ -88,7 +88,7 @@ int main() {
 
         // Delay to control frame rate
         SDL_Delay(16); // ~60 FPS
-        std::cout << gameState.player->x << " " << gameState.player->y << std::endl; // Debug output
+        std::cout << gameState.player->vx << " " << gameState.player->vy << std::endl; // Debug output
     }
 
     // Clean up
