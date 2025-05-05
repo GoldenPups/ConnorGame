@@ -1,8 +1,8 @@
 #include "save.h"
 #include <iostream>
 
-void saveGameState(const GameState& gameState) {
-    std::ofstream outFile("assets/bin/saveData.txt");
+void saveGameState(const GameState& gameState, int slot) {
+    std::ofstream outFile("assets/bin/saveData" + std::to_string(slot) + ".txt");
     if (outFile.is_open()) {
         outFile << gameState.gameMenu << std::endl;
         outFile << gameState.player->x << " " << gameState.player->y << " "
@@ -13,8 +13,8 @@ void saveGameState(const GameState& gameState) {
     }
 }
 
-void loadGameState(GameState& gameState) {
-    std::ifstream inFile("assets/bin/saveData.txt");
+void loadGameState(GameState& gameState, int slot) {
+    std::ifstream inFile("assets/bin/saveData" + std::to_string(slot) + ".txt");
     if (inFile.is_open()) {
         inFile >> gameState.gameMenu;
         inFile >> gameState.player->x >> gameState.player->y

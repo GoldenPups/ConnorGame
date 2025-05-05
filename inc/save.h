@@ -21,7 +21,7 @@ struct GameState {
     int cursor; // cursor used for multiple menus, set to zero by default
 };
 
-void saveGameState(const GameState& gameState);
-void loadGameState(GameState& gameState);
+void saveGameState(const GameState& gameState, int slot);
+void loadGameState(GameState& gameState, int slot);
 void intitializeGameState(GameState* gameState);
 #endif

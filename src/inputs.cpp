@@ -114,7 +114,7 @@ void handlePauseMenuInputs(GameState* gameState, SDL_Event& event) {
                         break;
                     case 1: // LOAD
                         cout << "Load Game" << endl;
-                        loadGameState(*gameState); // Load the game state
+                        loadGameState(*gameState, 0); // Load the game state 'TODO: add slot
                         gameState->gameMenu = GAME; // Unpause the game
                         break;
                     case 2: // Save
@@ -141,7 +141,7 @@ void handleStartMenuInputs(GameState* gameState, SDL_Event& event) {
                         break;
                     case 1: // "Load", 
                         cout << "Load Game" << endl;
-                        loadGameState(*gameState); // Load the game state
+                        loadGameState(*gameState, 0); // Load the game state
                         gameState->gameMenu = GAME; // Unpause the game
                         break;
                     case 2: // "Settings", 
@@ -180,15 +180,15 @@ void handleSaveMenuInputs(GameState* gameState, SDL_Event& event) {
                 switch (gameState->cursor) {
                     case 0: // Save Slot 1
                         cout << "Save Slot 1" << endl;
-                        saveGameState(*gameState); // Save the game state
+                        saveGameState(*gameState, 0); // Save the game state
                         break;
                     case 1: // Save Slot 2
                         cout << "Save Slot 2" << endl;
-                        saveGameState(*gameState); // Save the game state
+                        saveGameState(*gameState, 1); // Save the game state
                         break;
                     case 2: // Save Slot 3
                         cout << "Save Slot 3" << endl;
-                        saveGameState(*gameState); // Save the game state
+                        saveGameState(*gameState, 2); // Save the game state
                         break;
                     case 3: // Back
                         gameState->gameMenu = PAUSED; // Go back to pause menu
