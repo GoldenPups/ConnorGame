@@ -6,10 +6,13 @@
 #include <fstream>
 #include <string>
 
+// Game 'Menus'
 #define GAME 'G'
 #define PAUSED 'P'
 #define MAIN_MENU 'M'
+#define SAVE 'S'
 #define QUIT '0'
+//
 
 struct GameState {
     Player* player;

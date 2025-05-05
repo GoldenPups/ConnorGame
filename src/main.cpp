@@ -73,8 +73,15 @@ int main() {
             SDL_RenderPresent(renderer); // Present the renderer
             SDL_Delay(100); // Delay to avoid busy waiting
             handleInputs(&gameState);
-        }
-        gameState.cursor = 0;
+        } {gameState.cursor = 0;} // Reset cursor after exiting pause menu
+
+        while(gameState.gameMenu == SAVE){
+            saveMenu(renderer, gameState.cursor); // Call save screen function
+            SDL_RenderPresent(renderer); // Present the renderer
+            SDL_Delay(100); // Delay to avoid busy waiting
+            handleInputs(&gameState);
+        } {gameState.cursor = 0;} // Reset cursor after exiting pause menu
+        
         updatePhysics(gameState.player, world); // Assuming a fixed timestep of 16ms
         
         // Check for events

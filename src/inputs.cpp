@@ -27,6 +27,14 @@ void handleInputs(GameState* gameState) {
                 gameState->player->vx, gameState->player->vy = 0.0f; // Reset player movement
                 handlePauseMenuInputs(gameState, event); // Handle pause menu inputs
                 break;
+            case SAVE:
+                keysPressed.clear(); // Clear pressed keys
+                gameState->player->vx, gameState->player->vy = 0.0f; // Reset player movement
+                // saveMenu(renderer, gameState->cursor); // Call save screen function
+                // SDL_RenderPresent(renderer); // Present the renderer
+                // SDL_Delay(100); // Delay to avoid busy waiting
+                handleSaveMenuInputs(gameState, event); // Handle pause menu inputs
+                break;
         }
     }
 }
@@ -111,7 +119,7 @@ void handlePauseMenuInputs(GameState* gameState, SDL_Event& event) {
                         break;
                     case 2: // Save
                         cout << "Save Game" << endl;
-                        saveGameState(*gameState); // Save the game state
+                        gameState->gameMenu = SAVE; // Save the game state
                         break;
                     case 3: // Quit
                         gameState->gameMenu = MAIN_MENU; // Exit the game
@@ -148,6 +156,48 @@ void handleStartMenuInputs(GameState* gameState, SDL_Event& event) {
             case SDLK_ESCAPE:
                 cout << "ESCAPE" << endl;
                 gameState->gameMenu = QUIT; // Exit the game
+                break;
+            case SDLK_LEFT:
+                // cout << "LEFT" << endl;
+                if (gameState->cursor > 0) {
+                    gameState->cursor--;
+                }
+                break;
+            case SDLK_RIGHT:
+                // cout << "RIGHT" << endl;
+                if (gameState->cursor < NUM_MAIN_MENU_OPTIONS - 1) {
+                    gameState->cursor++;
+                }
+                break;
+        }
+    }
+}
+
+void handleSaveMenuInputs(GameState* gameState, SDL_Event& event) {
+    if (event.type == SDL_KEYDOWN) {
+        switch (event.key.keysym.sym) {
+            case SDLK_RETURN:
+                switch (gameState->cursor) {
+                    case 0: // Save Slot 1
+                        cout << "Save Slot 1" << endl;
+                        saveGameState(*gameState); // Save the game state
+                        break;
+                    case 1: // Save Slot 2
+                        cout << "Save Slot 2" << endl;
+                        saveGameState(*gameState); // Save the game state
+                        break;
+                    case 2: // Save Slot 3
+                        cout << "Save Slot 3" << endl;
+                        saveGameState(*gameState); // Save the game state
+                        break;
+                    case 3: // Back
+                        gameState->gameMenu = PAUSED; // Go back to pause menu
+                        break;
+                }
+                break;
+            case SDLK_ESCAPE:
+                cout << "ESCAPE" << endl;
+                gameState->gameMenu = PAUSED; // Go back to pause menu
                 break;
             case SDLK_LEFT:
                 // cout << "LEFT" << endl;
