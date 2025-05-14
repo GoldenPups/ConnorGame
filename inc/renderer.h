@@ -23,7 +23,7 @@ void drawImage(SDL_Renderer *renderer, SDL_Texture* texture, int x, int y, int w
 void PauseMenu(SDL_Renderer *renderer, int cursor);
 void startScreen(SDL_Renderer *renderer, int cursor);
 void drawOptions(SDL_Renderer *renderer, const std::vector<std::string>& options, int cursor, int yPosition);
-void saveMenu(SDL_Renderer *renderer, int cursor);
+void saveLoadMenu(SDL_Renderer *renderer, int cursor, std::string saveText);
 
 void drawWorld(SDL_Renderer* renderer, World* world, int offsetX, int offsetY);
 void drawPlayer(SDL_Renderer* renderer, Player* player, int offsetX, int offsetY);

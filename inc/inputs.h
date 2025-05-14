@@ -13,8 +13,9 @@ void handlePauseMenuInputs(GameState* GameState, SDL_Event& event);
 void handleGameplayInputs(GameState* GameState, SDL_Event& event, std::unordered_set<SDL_Keycode>& keysPressed);
 void handleStartMenuInputs(GameState* gameState, SDL_Event& event);
 void handleSaveMenuInputs(GameState* gameState, SDL_Event& event);
+void handleLoadMenuInputs(GameState* gameState, SDL_Event& event);
 
-#define MOVEMENT_SCALE 1
+#define MOVEMENT_SCALE 10
 
 #define NUM_PAUSE_MENU_OPTIONS 4
 #define NUM_MAIN_MENU_OPTIONS 4

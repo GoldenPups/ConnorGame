@@ -154,7 +154,7 @@ void startScreen(SDL_Renderer *renderer, int cursor) {
     SDL_RenderPresent(renderer);
 }
 
-void saveMenu(SDL_Renderer *renderer, int cursor) {
+void saveLoadMenu(SDL_Renderer *renderer, int cursor, std::string saveText) {
     if (!renderer) return;
 
     // Set the background color for the save screen
@@ -163,10 +163,11 @@ void saveMenu(SDL_Renderer *renderer, int cursor) {
     const SDL_Rect saveBar = {0, 0, window_Width, window_Height};
     SDL_RenderFillRect(renderer, &saveBar); // Clear the screen
 
-    drawText(renderer, "Save Game", window_Width / 2, window_Height / 2 - 50, 50, 1, {255, 255, 255, 255}); // Draw save text
-    drawText(renderer, "Press Enter to Save", window_Width / 2, window_Height / 2 + 50, 30, 1, {255, 255, 255, 255}); // Draw instructions
+    drawText(renderer, saveText.c_str(), window_Width / 2, window_Height / 2 - 50, 50, 1, {255, 255, 255, 255}); // Draw save text
+    std::string text = "Press Enter to " + saveText;
+    drawText(renderer, text.c_str(), window_Width / 2, window_Height / 2 + 50, 30, 1, {255, 255, 255, 255}); // Draw instructions
 
-    drawOptions(renderer, {"Save Slot 1", "Save Slot 2", "Save Slot 3", "Back"}, cursor, window_Height / 2 + 100); // Draw options
+    drawOptions(renderer, {"Slot One", "Slot Two", "Slot Three", "Back"}, cursor, window_Height / 2 + 100); // Draw options
     
     // Present the renderer (only once per frame)
     SDL_RenderPresent(renderer);

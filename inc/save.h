@@ -12,6 +12,7 @@
 #define MAIN_MENU 'M'
 #define SAVE 'S'
 #define QUIT '0'
+#define LOAD 'L'
 //
 
 struct GameState {

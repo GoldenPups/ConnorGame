@@ -16,6 +16,7 @@ int main() {
         printf("SDL could not initialize! Error: %s\n", SDL_GetError());
         return 1;
     }
+
     // Initialize SDL_ttf
     if (TTF_Init() == -1) {
         std::cerr << "Failed to initialize SDL_ttf: " << TTF_GetError() << std::endl;
@@ -76,12 +77,19 @@ int main() {
         } {gameState.cursor = 0;} // Reset cursor after exiting pause menu
 
         while(gameState.gameMenu == SAVE){
-            saveMenu(renderer, gameState.cursor); // Call save screen function
+            saveLoadMenu(renderer, gameState.cursor, "Save"); // Call save screen function
             SDL_RenderPresent(renderer); // Present the renderer
             SDL_Delay(100); // Delay to avoid busy waiting
             handleInputs(&gameState);
         } {gameState.cursor = 0;} // Reset cursor after exiting pause menu
         
+        while(gameState.gameMenu == LOAD){
+            saveLoadMenu(renderer, gameState.cursor, "Load"); // Call save screen function
+            SDL_RenderPresent(renderer); // Present the renderer
+            SDL_Delay(100); // Delay to avoid busy waiting
+            handleInputs(&gameState);
+        }
+
         updatePhysics(gameState.player, world); // Assuming a fixed timestep of 16ms
         
         // Check for events
@@ -89,9 +97,6 @@ int main() {
         
         // Update the renderer
         updateRenderer(renderer, gameState.player, world);
-
-        // // Render everything
-        // updateRenderer(renderer, gameState.player, playerTexture);
 
         // Delay to control frame rate
         SDL_Delay(16); // ~60 FPS
