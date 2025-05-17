@@ -27,6 +27,7 @@ void loadGameState(GameState& gameState, int slot) {
 
 void intitializeGameState(GameState* gameState) {
     gameState->gameMenu = MAIN_MENU;
+    gameState->prevGameMenu = MAIN_MENU; // Initialize previous game menu
     gameState->player = createPlayer(0.0f, 0.0f, 0.0f, 0.0f, 50, 50); // Create a new player object
     gameState->cursor = 0; // Initialize pause menu cursor
 }

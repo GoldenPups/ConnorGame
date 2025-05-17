@@ -195,7 +195,4 @@ void updateRenderer(SDL_Renderer* renderer, Player* player, World* world) {
     
     // Draw the player texture
     // drawImage(renderer, playerTexture, static_cast<int>(player->x), static_cast<int>(player->y), 50, 50);
-    
-    // Present the renderer (only once per frame)
-    SDL_RenderPresent(renderer);
 }
