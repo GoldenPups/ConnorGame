@@ -95,6 +95,8 @@ void handlePauseMenuInputs(GameState* gameState, SDL_Event& event) {
             case SDLK_ESCAPE:
                 // cout << "ESCAPE" << endl;
                 gameState->gameMenu = GAME; // Unpause the game
+                gameState->prevGameMenu = PAUSED;
+                gameState->cursor = 0;
                 break;
             case SDLK_LEFT:
                 // cout << "LEFT" << endl;
@@ -110,20 +112,25 @@ void handlePauseMenuInputs(GameState* gameState, SDL_Event& event) {
                 break;
             case SDLK_RETURN:
                 // cout << "ENTER" << endl;
+                gameState->prevGameMenu = PAUSED;
                 switch (gameState->cursor) {
                     case 0: // Resume
                         gameState->gameMenu = GAME; // Unpause the game
+                        gameState->cursor = 0;
                         break;
                     case 1: // LOAD
                         cout << "Load Game" << endl;
                         gameState->gameMenu = LOAD; // Unpause the game
+                        gameState->cursor = 0;
                         break;
                     case 2: // Save
                         cout << "Save Game" << endl;
                         gameState->gameMenu = SAVE; // Save the game state
+                        gameState->cursor = 0;
                         break;
                     case 3: // Quit
                         gameState->gameMenu = MAIN_MENU; // Exit the game
+                        gameState->cursor = 0;
                         break;
                 }
                 break;
@@ -139,13 +146,19 @@ void handleStartMenuInputs(GameState* gameState, SDL_Event& event) {
                     case 0: // "New Game", 
                         intitializeGameState(gameState); // Initialize a new game state
                         gameState->gameMenu = GAME; // Unpause the game
+                        gameState->prevGameMenu = MAIN_MENU;
+                        gameState->cursor = 0; 
                         break;
                     case 1: // "Load", 
                         cout << "Load Game" << endl;
                         gameState->gameMenu = LOAD; // Unpause the game
+                        gameState->prevGameMenu = MAIN_MENU;
+                        gameState->cursor = 0;
                         break;
                     case 2: // "Settings", 
                         cout << "Settings" << endl;
+                        gameState->prevGameMenu = MAIN_MENU;
+                        gameState->cursor = 0;
                         
                         break;
                     case 3: // "Quit"
@@ -156,6 +169,7 @@ void handleStartMenuInputs(GameState* gameState, SDL_Event& event) {
             case SDLK_ESCAPE:
                 cout << "ESCAPE" << endl;
                 gameState->gameMenu = QUIT; // Exit the game
+                gameState->cursor = 0;
                 break;
             case SDLK_LEFT:
                 // cout << "LEFT" << endl;
@@ -224,16 +238,22 @@ void handleLoadMenuInputs(GameState* gameState, SDL_Event& event) {
                         cout << "Load Slot 1" << endl;
                         loadGameState(*gameState, 0); // Load the game state
                         gameState->gameMenu = GAME; // Unpause the game
+                        gameState->prevGameMenu = LOAD;
+                        gameState->cursor = 0;
                         break;
                     case 1: // Load Slot 2
                         cout << "Load Slot 2" << endl;
                         loadGameState(*gameState, 1); // Load the game state
                         gameState->gameMenu = GAME; // Unpause the game
+                        gameState->prevGameMenu = LOAD;
+                        gameState->cursor = 0;
                         break;
                     case 2: // Load Slot 3
                         cout << "Load Slot 3" << endl;
                         loadGameState(*gameState, 2); // Load the game state
                         gameState->gameMenu = GAME; // Unpause the game
+                        gameState->prevGameMenu = LOAD;
+                        gameState->cursor = 0;
                         break;
                     case 3: // Back
                         gameState->gameMenu = gameState->prevGameMenu; // Go back to previous menu
@@ -243,6 +263,7 @@ void handleLoadMenuInputs(GameState* gameState, SDL_Event& event) {
             case SDLK_ESCAPE:
                 cout << "ESCAPE" << endl;
                 gameState->gameMenu = gameState->prevGameMenu; // Go back to previous menu
+                gameState->cursor = 0;
                 break;
             case SDLK_LEFT:
                 // cout << "LEFT" << endl;

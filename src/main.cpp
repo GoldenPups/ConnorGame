@@ -74,66 +74,11 @@ int main() {
 
         SDL_RenderPresent(renderer);
         
-        while(gameState.gameMenu == MAIN_MENU){
-            startScreen(renderer, gameState.cursor); // Call start screen function
-            handleInputs(&gameState); // Handle start menu inputs
-            if(gameState.gameMenu != MAIN_MENU){
-                gameState.prevGameMenu = MAIN_MENU; // Save the previous menu state
-            }
-        }
-
-        // Process events
-        handleInputs(&gameState);
-        
-        while(gameState.gameMenu == PAUSED){
-            PauseMenu(renderer, gameState.cursor); // Call pause menu function
-            SDL_RenderPresent(renderer); // Present the renderer
-            SDL_Delay(100); // Delay to avoid busy waiting
-            handleInputs(&gameState);
-            if(gameState.gameMenu != PAUSED){
-                gameState.cursor = 0;
-                gameState.prevGameMenu = PAUSED; // Save the previous menu state
-                updateRenderer(renderer, gameState.player, world);
-            }
-        }
-
-        while(gameState.gameMenu == SAVE){
-            saveLoadMenu(renderer, gameState.cursor, "Save"); // Call save screen function
-            SDL_RenderPresent(renderer); // Present the renderer
-            SDL_Delay(100); // Delay to avoid busy waiting
-            handleInputs(&gameState);
-            if(gameState.gameMenu != SAVE){
-                gameState.cursor = 0;
-                gameState.prevGameMenu = SAVE; // Save the previous menu state
-                updateRenderer(renderer, gameState.player, world);
-            }
-        }
-        
-        while(gameState.gameMenu == LOAD){
-            saveLoadMenu(renderer, gameState.cursor, "Load"); // Call save screen function
-            SDL_RenderPresent(renderer); // Present the renderer
-            SDL_Delay(100); // Delay to avoid busy waiting
-            handleInputs(&gameState);
-            if(gameState.gameMenu != LOAD){
-                gameState.cursor = 0;
-                gameState.prevGameMenu = LOAD; // Save the previous menu state
-                updateRenderer(renderer, gameState.player, world);
-            }
-        }
+        updateRenderer(renderer, &gameState, world); // Update the renderer
+        handleInputs(&gameState); // Handle start menu inputs
 
         updatePhysics(gameState.player, world, deltaTime); // Pass deltaTime
-        
-        // Check for events
         checkEvents(gameState.player, world);
-        
-        // Update the renderer
-        // display a black frame if in menus
-        if(gameState.gameMenu != GAME){
-            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Set background color to black
-            SDL_RenderClear(renderer); // Clear the screen
-        } else {
-            updateRenderer(renderer, gameState.player, world);
-        }
 
         // Delay to control frame rate
         SDL_Delay(8);

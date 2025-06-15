@@ -173,8 +173,7 @@ void saveLoadMenu(SDL_Renderer *renderer, int cursor, std::string saveText) {
     SDL_RenderPresent(renderer);
 }
 
-// void updateRenderer(SDL_Renderer *renderer, Player* player, SDL_Texture* playerTexture) {
-void updateRenderer(SDL_Renderer* renderer, Player* player, World* world) {
+void gameN(SDL_Renderer* renderer, Player* player, World* world, char GameState) {
     if (!renderer) return;
 
     // Clear the screen
@@ -195,4 +194,42 @@ void updateRenderer(SDL_Renderer* renderer, Player* player, World* world) {
     
     // Draw the player texture
     // drawImage(renderer, playerTexture, static_cast<int>(player->x), static_cast<int>(player->y), 50, 50);
+}
+
+void updateRenderer(SDL_Renderer* renderer, GameState* gameState, World* world) {
+    if (!renderer || !gameState->player || !world) return;
+
+    // Clear the screen
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Set background color to black
+    SDL_RenderClear(renderer);
+
+    switch (gameState->gameMenu)
+    {
+    case GAME:
+        // Draw the game world and player
+        gameN(renderer, gameState->player, world, gameState->gameMenu);
+        break;
+    case PAUSED:
+        // Draw the pause menu
+        PauseMenu(renderer, gameState->cursor);
+        break;
+        case MAIN_MENU:
+        // Draw the start screen
+        startScreen(renderer, gameState->cursor);
+        break;
+        case SAVE:
+        // Draw the save menu
+        saveLoadMenu(renderer, gameState->cursor, "Save");
+        break;
+        case LOAD:
+        // Draw the load menu
+        saveLoadMenu(renderer, gameState->cursor, "Load");
+        break;
+        
+        default:
+        break;
+    }
+
+    // Present the renderer
+    SDL_RenderPresent(renderer);
 }
