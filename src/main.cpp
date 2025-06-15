@@ -60,7 +60,12 @@ int main() {
     World* world = createWorld1(100,100);
     Player* player = createPlayer(300, 200, 0, 0, 50, 50); 
 
+    Uint32 lastTime = SDL_GetTicks();
     while (gameState.gameMenu != QUIT) {
+        Uint32 currentTime = SDL_GetTicks();
+        float deltaTime = (currentTime - lastTime) / 1000.0f; // Delta time in seconds
+        lastTime = currentTime;
+
         SDL_RenderPresent(renderer);
         
         while(gameState.gameMenu == MAIN_MENU){
@@ -110,7 +115,7 @@ int main() {
             }
         }
 
-        updatePhysics(gameState.player, world); // Assuming a fixed timestep of 16ms
+        updatePhysics(gameState.player, world, deltaTime); // Pass deltaTime
         
         // Check for events
         checkEvents(gameState.player, world);
@@ -125,8 +130,8 @@ int main() {
         }
 
         // Delay to control frame rate
-        SDL_Delay(16); // ~60 FPS
-        std::cout << gameState.player->vx << " " << gameState.player->vy << std::endl; // Debug output
+        SDL_Delay(8);
+        std::cout << gameState.player->vx << " " << gameState.player->vy << " dt: " << deltaTime << std::endl; // Debug output
     }
 
     // Clean up

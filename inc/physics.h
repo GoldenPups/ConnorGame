@@ -5,16 +5,16 @@
 #include <time.h>
 
 struct Player {
-    int x;
-    int y;
+    float x;
+    float y;
     float vx;
     float vy;
     int width;
     int height;
 };
 
-Player* createPlayer(int x, int y, float vx, float vy, int width, int height);
-void updatePhysics(Player* player, World* world);
+Player* createPlayer(float x, float y, float vx, float vy, int width, int height);
+void updatePhysics(Player* player, World* world, float deltaTime);
 void checkEvents(Player* player, World* world);
 void destroyPhysics(Player* player);
 
