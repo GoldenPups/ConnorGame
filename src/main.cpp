@@ -64,7 +64,7 @@ int main() {
     intitializeGameState(&gameState);
     // Create a player object
     World* world = createWorld1(100,100);
-    Player* player = createPlayer(300, 200, 0, 0, 50, 50); 
+    Player* player = createPlayer(300, 200, 0, 0, playerWidth, playerHeight); 
 
     Uint32 lastTime = SDL_GetTicks();
     while (gameState.gameMenu != QUIT) {
@@ -77,7 +77,7 @@ int main() {
         updateRenderer(renderer, &gameState, world); // Update the renderer
         handleInputs(&gameState); // Handle start menu inputs
 
-        updatePhysics(gameState.player, world, deltaTime); // Pass deltaTime
+        updatePhysics(gameState.player, world, deltaTime, gameState.wallHacks); // Pass deltaTime
         checkEvents(gameState.player, world);
 
         // Delay to control frame rate

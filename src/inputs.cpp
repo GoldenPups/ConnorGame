@@ -65,6 +65,14 @@ void handleGameplayInputs(GameState* gameState, SDL_Event& event, unordered_set<
                 // cout << "ESCAPE" << endl;
                 gameState->gameMenu = PAUSED; // Pause the game
                 break;
+            case SDLK_F12:
+                gameState->wallHacks = !gameState->wallHacks; // Toggle wall hacks
+                if (gameState->wallHacks) {
+                    cout << "Wall Hacks Enabled" << endl;
+                } else {
+                    cout << "Wall Hacks Disabled" << endl;
+                }
+                break;
         }
         cout << gameState->player->vx << " " << gameState->player->vy << endl; // Debug output
     } else if (event.type == SDL_KEYUP) {

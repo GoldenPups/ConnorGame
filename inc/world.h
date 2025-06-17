@@ -2,7 +2,7 @@
 #define WORLD_H
 
 #include <vector>
-
+#define WORLD_TILE_SIZE 50
 
 struct Object { 
     int x;      
@@ -27,6 +27,7 @@ struct World {
 };
 
 
+World* createTestGroundWorld(const int world_OriginX, const int world_OriginY);
 
 World* createWorld1(const int world_OriginX, const int world_OriginY);
 void destroyWorld(World* world);

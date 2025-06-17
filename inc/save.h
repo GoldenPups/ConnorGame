@@ -19,6 +19,7 @@ struct GameState {
     Player* player;
     char gameMenu; // R:Running, P:Paused, M:Main Menu, 0:Quit
     char prevGameMenu;
+    bool wallHacks;
 
     int cursor; // cursor used for multiple menus, set to zero by default
 };
@@ -26,4 +27,5 @@ struct GameState {
 void saveGameState(const GameState& gameState, int slot);
 void loadGameState(GameState& gameState, int slot);
 void intitializeGameState(GameState* gameState);
+char* read_binary_file_as_string(const char* filename);
 #endif

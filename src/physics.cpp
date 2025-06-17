@@ -22,7 +22,11 @@ void setVelPlayer(Player* player, float vx, float vy) {
     player->vy = vy;
 }
 
-bool checkCollision(Player* player, Object* object) {
+bool checkCollision(Player* player, Object* object, bool wallHacks) {
+    if(wallHacks) {
+        // If wall hacks are enabled, allow the player to pass through obstacles
+        return false;
+    }
     return !(player->x + player->width < object->x ||  // Player is to the left of the obstacle
              player->x > object->x + object->width || // Player is to the right of the obstacle
              player->y + player->height < object->y ||  // Player is above the obstacle
@@ -32,7 +36,7 @@ bool checkCollision(Player* player, Object* object) {
 const float SPEED = 200; // Speed multiplier for movement
 const int ITTERATIONS = 10; // Number of iterations for smoother movement
 
-void updatePhysics(Player* player, World* world, float deltaTime) {
+void updatePhysics(Player* player, World* world, float deltaTime, bool wallHacks) {
     for(int i = 0; i < ITTERATIONS; i++){
         float speedMultiplier = deltaTime * SPEED/ITTERATIONS;
         player->x += (player->vx) * speedMultiplier;
@@ -62,7 +66,7 @@ void updatePhysics(Player* player, World* world, float deltaTime) {
 
         // Check for collision with world boundaries
         for (Object& obstacle : world->obstacles) {
-            if (checkCollision(player, &obstacle)) {
+            if (checkCollision(player, &obstacle, wallHacks)) {
                 // Handle collision (e.g., stop movement or adjust position)
                 player->x -= player->vx * speedMultiplier;
                 player->y -= player->vy * speedMultiplier;
@@ -74,7 +78,7 @@ void updatePhysics(Player* player, World* world, float deltaTime) {
 
 void checkEvents(Player* player, World* world) {
     for (Object& event : world->events) {
-        if (checkCollision(player, &event)) {
+        if (checkCollision(player, &event, false)) {
            event.eventFunc(); // Call the event function
         }
     }
