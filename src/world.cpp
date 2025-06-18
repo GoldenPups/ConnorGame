@@ -11,14 +11,6 @@ void event1() {
     std::cout << "Event 1 triggered!" << std::endl;
 }
 
-int getWorldSizeX(string world_0b) {
-    for(int i = 0; i < world_0b.length(); i++) {
-        if(world_0b[i] == '\n') {
-            return i * WORLD_TILE_SIZE; // Return the width based on the number of characters before the first newline
-        }
-    }
-}
-
 vector<Object> createObstaclesFromBinary(string world_0b) {
     vector<Object> obstacles;
 
@@ -77,6 +69,7 @@ vector<Object> createObstaclesFromBinary(string world_0b) {
         }
     }
     cout << "Number of obstacles: " << numObstacles << endl;
+    cout << "Dimensions of world: " << rows << " : " << cols << endl;
     return obstacles;
 }
 
