@@ -10,7 +10,6 @@ void drawObstacles(SDL_Renderer* renderer, World* world, int offsetX, int offset
     }
 }
 
-
 void drawPlayer(SDL_Renderer* renderer, Player* player, int offsetX, int offsetY) {
     SDL_Rect playerRect;
     playerRect.x = static_cast<int>(player->x) + offsetX;

@@ -11,22 +11,72 @@ void event1() {
     std::cout << "Event 1 triggered!" << std::endl;
 }
 
-vector<Object> createObstaclesFromBinary(string world_0b) {
-    vector<Object> obstacles;
-    int y = 0;
-    int xOffset = 0;
+int getWorldSizeX(string world_0b) {
     for(int i = 0; i < world_0b.length(); i++) {
-        if (world_0b[i] == '1') {
-            int x = (i) * WORLD_TILE_SIZE - xOffset;
-            obstacles.push_back({x, y, WORLD_TILE_SIZE, WORLD_TILE_SIZE});
-        } else if (world_0b[i] == '\n') {
-            // New line character
-            xOffset = (i + 1) * WORLD_TILE_SIZE;
-            y += WORLD_TILE_SIZE; // Move to the next row
-        } else {
-            std::cerr << "Invalid character in world_0b: " << world_0b[i] << std::endl;
+        if(world_0b[i] == '\n') {
+            return i * WORLD_TILE_SIZE; // Return the width based on the number of characters before the first newline
         }
     }
+}
+
+vector<Object> createObstaclesFromBinary(string world_0b) {
+    vector<Object> obstacles;
+
+    // Parse the string into a 2D grid
+    vector<vector<char>> grid;
+    vector<char> row;
+    for (char c : world_0b) {
+        if (c == '\n') {
+            if (!row.empty()) grid.push_back(row);
+            row.clear();
+        } else {
+            row.push_back(c);
+        }
+    }
+    if (!row.empty()) grid.push_back(row);
+
+    int rows = grid.size();
+    int cols = rows > 0 ? grid[0].size() : 0;
+    vector<vector<bool>> visited(rows, vector<bool>(cols, false));
+    int numObstacles = 0;
+    for (int r = 0; r < rows; ++r) {
+        for (int c = 0; c < cols; ++c) {
+            if (grid[r][c] == '1' && !visited[r][c]) {
+                // Find width
+                int width = 0;
+                while (c + width < cols && grid[r][c + width] == '1' && !visited[r][c + width]) {
+                    ++width;
+                }
+                // Find height
+                int height = 0;
+                bool done = false;
+                while (r + height < rows && !done) {
+                    for (int x = 0; x < width; ++x) {
+                        if (grid[r + height][c + x] != '1' || visited[r + height][c + x]) {
+                            done = true;
+                            break;
+                        }
+                    }
+                    if (!done) ++height;
+                }
+                // Mark visited
+                for (int y = 0; y < height; ++y) {
+                    for (int x = 0; x < width; ++x) {
+                        visited[r + y][c + x] = true;
+                    }
+                }
+                // Add obstacle (convert to world coordinates)
+                numObstacles++;
+                obstacles.push_back({
+                    c * WORLD_TILE_SIZE,
+                    r * WORLD_TILE_SIZE,
+                    width * WORLD_TILE_SIZE,
+                    height * WORLD_TILE_SIZE
+                });
+            }
+        }
+    }
+    cout << "Number of obstacles: " << numObstacles << endl;
     return obstacles;
 }
 
