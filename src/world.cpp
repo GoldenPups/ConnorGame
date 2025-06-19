@@ -1,6 +1,7 @@
 #include "world.h"
 #include "physics.h"
 #include "save.h"
+#include "map_exporter.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -70,6 +71,7 @@ vector<Object> createObstaclesFromBinary(string world_0b) {
     }
     cout << "Number of obstacles: " << numObstacles << endl;
     cout << "Dimensions of world: " << rows << " : " << cols << endl;
+    exportMapAsPNG(grid); // Saves grid as PNG for visualization
     return obstacles;
 }
 

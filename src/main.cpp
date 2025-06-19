@@ -82,7 +82,7 @@ int main() {
 
         // Delay to control frame rate
         SDL_Delay(8);
-        std::cout << gameState.player->vx << " " << gameState.player->vy << " dt: " << deltaTime << std::endl; // Debug output
+        // std::cout << gameState.player->vx << " " << gameState.player->vy << " dt: " << deltaTime << std::endl; // Debug output
     }
 
     // Clean up
