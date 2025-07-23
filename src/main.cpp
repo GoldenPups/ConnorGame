@@ -55,7 +55,7 @@ int main() {
     SDL_RenderSetLogicalSize(renderer, window_Width, window_Height);
 
     // Load player texture
-    SDL_Texture* playerTexture = loadTextureFromFile(renderer, "assets/textures/player/toddHoward.png"); // Ensure the correct path is passed as a string
+    SDL_Texture* playerTexture = loadTextureFromFile(renderer, "/player/toddHoward.png"); // Ensure the correct path is passed as a string
     if (!playerTexture) {
         return 1;
     }

@@ -21,8 +21,10 @@ void drawPlayer(SDL_Renderer* renderer, Player* player, int offsetX, int offsetY
     SDL_RenderFillRect(renderer, &playerRect);
 }
 
-SDL_Texture* loadTextureFromFile(SDL_Renderer *renderer, const char* filePath) {
-    SDL_Surface* imageSurface = IMG_Load("/assets/textures" + filePath); // loadTextureFromFile
+SDL_Texture* loadTextureFromFile(SDL_Renderer *renderer, std::string filePath) {
+    std::string path = "assets/textures";
+    std::string fullPath = path + filePath;
+    SDL_Surface* imageSurface = IMG_Load(fullPath.c_str()); // loadTextureFromFile
     if (!imageSurface) {
         std::cerr << "Failed to load image: " << IMG_GetError() << std::endl;
         return nullptr;
@@ -42,10 +44,10 @@ void drawImage(SDL_Renderer *renderer, SDL_Texture* texture, SDL_Rect destRect) 
     SDL_RenderCopy(renderer, texture, nullptr, &destRect);
 }
 
-void drawInteractableObstacles(SDL_Renderer* renderer, World* world, vector<Interact_Object>& objects) {
-    for (const Object& object : objects) {
+void drawInteractableObstacles(SDL_Renderer* renderer, World* world, std::vector<Interact_Object>& objects) {
+    for (const Interact_Object& object : objects) {
         SDL_Rect rect = {object.x, object.y, object.width, object.height};
-        drawImage(renderer, object.drawTexture, rect);
+        drawImage(renderer, loadTextureFromFile(renderer, object.objectTexture), rect);
     }
 }
 

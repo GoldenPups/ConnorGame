@@ -2,6 +2,7 @@
 #include "physics.h"
 #include "save.h"
 #include "map_exporter.h"
+#include "objects.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -108,6 +109,7 @@ World* createWorld1(const int world_OriginX, const int world_OriginY) {
     world->height = world_Height;
 
     world->collisionBoxes = createObstaclesFromBinary(read_binary_file_as_string("assets/worlds/world1.bin"));
+    world->objects.push_back(createToilet(200, 200));
 
     return world;
 }

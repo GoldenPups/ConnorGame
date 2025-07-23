@@ -65,7 +65,7 @@ void updatePhysics(Player* player, World* world, float deltaTime, bool wallHacks
         }
 
         // Check for collision with world boundaries
-        for (Object& obstacle : world->obstacles) {
+        for (Object& obstacle : world->collisionBoxes) {
             if (checkCollision(player, &obstacle, wallHacks)) {
                 // Handle collision (e.g., stop movement or adjust position)
                 player->x -= player->vx * speedMultiplier;

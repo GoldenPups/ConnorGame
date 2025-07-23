@@ -19,8 +19,9 @@ bool initRenderer(SDL_Window** window, SDL_Renderer** renderer);
 void drawGrid(SDL_Renderer* renderer);
 // void drawPlayer(SDL_Renderer* renderer, Player* player);
 // void updateRenderer(SDL_Renderer* renderer, Player* player, SDL_Texture* playerTexture);
-SDL_Texture* loadTextureFromFile(SDL_Renderer *renderer, const char* filePath);
+SDL_Texture* loadTextureFromFile(SDL_Renderer *renderer, std::string filePath);
 void drawImage(SDL_Renderer *renderer, SDL_Texture* texture, int x, int y, int width, int height);
 void updateRenderer(SDL_Renderer* renderer, GameState* gameState, World* world);
+void drawInteractableObstacles(SDL_Renderer* renderer, World* world, std::vector<Interact_Object>& objects);
 
 #endif
