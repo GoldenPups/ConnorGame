@@ -4,7 +4,7 @@
 
 void drawObstacles(SDL_Renderer* renderer, World* world, int offsetX, int offsetY) {
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Set obstacle color to green
-    for (const Object& obstacle : world->obstacles) {
+    for (const Object& obstacle : world->collisionBoxes) {
         SDL_Rect rect = {obstacle.x + offsetX, obstacle.y + offsetY, obstacle.width, obstacle.height};
         SDL_RenderFillRect(renderer, &rect);
     }
@@ -22,7 +22,7 @@ void drawPlayer(SDL_Renderer* renderer, Player* player, int offsetX, int offsetY
 }
 
 SDL_Texture* loadTextureFromFile(SDL_Renderer *renderer, const char* filePath) {
-    SDL_Surface* imageSurface = IMG_Load(filePath); // loadTextureFromFile
+    SDL_Surface* imageSurface = IMG_Load("/assets/textures" + filePath); // loadTextureFromFile
     if (!imageSurface) {
         std::cerr << "Failed to load image: " << IMG_GetError() << std::endl;
         return nullptr;
@@ -36,11 +36,17 @@ SDL_Texture* loadTextureFromFile(SDL_Renderer *renderer, const char* filePath) {
     return texture;
 }
 
-void drawImage(SDL_Renderer *renderer, SDL_Texture* texture, int x, int y, int width, int height) {
+void drawImage(SDL_Renderer *renderer, SDL_Texture* texture, SDL_Rect destRect) {
     if (!renderer || !texture) return;
 
-    SDL_Rect destRect = {x, y, width, height};
     SDL_RenderCopy(renderer, texture, nullptr, &destRect);
+}
+
+void drawInteractableObstacles(SDL_Renderer* renderer, World* world, vector<Interact_Object>& objects) {
+    for (const Object& object : objects) {
+        SDL_Rect rect = {object.x, object.y, object.width, object.height};
+        drawImage(renderer, object.drawTexture, rect);
+    }
 }
 
 void drawText(SDL_Renderer *renderer, const char* text, int x, int y, int fontSize, bool centered, SDL_Color textColor) {
@@ -160,6 +166,7 @@ void gameN(SDL_Renderer* renderer, Player* player, World* world, char GameState)
     int offsetY = world -> y;
 
     drawObstacles(renderer, world, offsetX, offsetY);
+    drawInteractableObstacles(renderer, world, world->objects);
 
     SDL_SetRenderDrawColor(renderer, 225, 225, 225, 255);
 

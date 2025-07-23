@@ -14,6 +14,16 @@ struct Object {
     void (*eventFunc)(); // function pointer for event handling
 };
 
+struct Interact_Object {
+    string objectName;
+    string objectTexture;
+    int x;
+    int y;
+    int width;
+    int height;
+    int timesUsed;
+    void (*eventFunc)(); // function pointer for event handling
+};
 
 // World position
 struct World {
@@ -21,7 +31,7 @@ struct World {
     int y;
     int width;
     int height;
-    std::vector<Object> obstacles; // colision checks
+    std::vector<Object> collisionBoxes; // colision checks
     std::vector<Object> objects; // no colision checks (just renderer)
     std::vector<Object> events; // event checks (dialog) 
 };
