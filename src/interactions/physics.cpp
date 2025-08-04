@@ -54,14 +54,26 @@ void updatePhysics(Player* player, World* world, float deltaTime, bool wallHacks
 
         //Scroll the world if the player is close to the edges
         if(player->x + offsetX > maxX) {
-            world->x -= player->x + offsetX - maxX;
+            world->x -= player->vx;
+            for (Interact_Object& object_i : world->objects) {
+                object_i.x -= player->vx; // Adjust object positions
+            }
         } else if(player->x + offsetX < minX) {
-            world->x -= player->x + offsetX - minX;
+            world->x -= player->vx;
+            for (Interact_Object& object_i : world->objects) {
+                object_i.x -= player->vx; // Adjust object positions
+            }
         }
         if(player->y + offsetY > maxY) {
-            world->y -= player->y + offsetY - maxY;
+            world->y -= player->vy;
+            for (Interact_Object& object_i : world->objects) {
+                object_i.y -= player->vy; // Adjust object positions
+            }
         } else if(player->y + offsetY < minY) {
-            world->y -= player->y + offsetY - minY;
+            world->y -= player->vy;
+            for (Interact_Object& object_i : world->objects) {
+                object_i.y -= player->vy; // Adjust object positions
+            }
         }
 
         // Check for collision with world boundaries
