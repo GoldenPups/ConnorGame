@@ -77,7 +77,7 @@ int main() {
         updateRenderer(renderer, &gameState, world); // Update the renderer
         handleInputs(&gameState); // Handle start menu inputs
 
-        updatePhysics(gameState.player, world, deltaTime, gameState.wallHacks); // Pass deltaTime
+        updatePhysics(gameState.player, gameState.worlds.at(gameState.player->currentWorld), deltaTime, gameState.wallHacks); // Pass deltaTime
         checkEvents(gameState.player, world);
 
         // Delay to control frame rate

@@ -14,6 +14,8 @@ struct Player {
     float vy;
     int width;
     int height;
+    
+    int currentWorld;
 };
 
 Player* createPlayer(float x, float y, float vx, float vy, int width, int height);

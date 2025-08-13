@@ -5,6 +5,7 @@
 
 #include <fstream>
 #include <string>
+#include <vector>
 
 // Game 'Menus'
 #define GAME 'G'
@@ -20,6 +21,9 @@ struct GameState {
     char gameMenu; // R:Running, P:Paused, M:Main Menu, 0:Quit
     char prevGameMenu;
     bool wallHacks;
+
+    //worlds
+    World* currentWorld; // currentWorld
 
     int cursor; // cursor used for multiple menus, set to zero by default
 };
